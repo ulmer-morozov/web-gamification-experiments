@@ -26,9 +26,9 @@ export class Wall2 {
         }
     }
 
-    createMesh = (): BABYLON.Mesh => {
-        const wallHeight = 2;
-        const wallThickness = wallHeight / 5;
+    createMesh = (params: { wallHeight: number, wallThickness: number }): BABYLON.Mesh => {
+        const wallHeight = params.wallHeight;
+        const wallThickness = params.wallThickness;
 
         const trianglesInOneWallPlate = 2;
         let closed = false;
@@ -67,8 +67,6 @@ export class Wall2 {
 
         for (let i = 0; i < this.corners.length; i++) {
             const currentCorner = this.corners[i];
-
-            // debugger;
 
             const nextCorner = this.corners[(i + 1) % this.corners.length];
             nextCorner.subtractToRef(currentCorner, currDirection);
@@ -252,7 +250,7 @@ export class Wall2 {
         let normals = [];
 
         BABYLON.VertexData.ComputeNormals(positions, indices, normals);
-        // (BABYLON.VertexData as any)._ComputeSides(BABYLON.Mesh.DOUBLESIDE, positions, indices, normals, uvs);
+        (BABYLON.VertexData as any)._ComputeSides(BABYLON.Mesh.FRONTSIDE, positions, indices, normals, uvs);
         // debugger;
 
         //Create a custom mesh  

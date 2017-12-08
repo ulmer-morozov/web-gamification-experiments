@@ -40,8 +40,8 @@ class Application {
 
     this.canvas.focus();
 
-    this.camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
-    this.camera.attachControl(this.canvas, true);
+    // this.camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
+    // this.camera.attachControl(this.canvas, true);
 
   }
 
@@ -69,54 +69,85 @@ class Application {
     // Add and manipulate meshes in the scene
     // var sphere = BABYLON.MeshBuilder.CreateBox("sphere", { width: 2 }, this.scene);
 
-    // The ground
-    // var ground = BABYLON.Mesh.CreateGround("ground", 500, 500, 2, this.scene);
-    // ground.checkCollisions = true;
+    var ground = BABYLON.Mesh.CreateGround("ground", 500, 500, 2, this.scene);
+    ground.checkCollisions = true;
 
-    
 
+    const wallHeight = 2;
+    const wallThickness = wallHeight / 5;
+    const wallParams = { wallHeight: wallHeight, wallThickness: wallThickness }
+
+
+
+    //только против часовой стрелки рисовать иначе нормаль для внутренних поверхностей смотрит внутрь фигуры
     const simpleRoomData = [
-      -5, +0,
-      +5, +0,
-      +5, +5,
-      -3, +7,
-      // -5, +0,      
+      -1.0, +3.0,
+      -3.0, +3.0,
+      -4.0, +2.0,
+      -4.0, -2.0,
+      //
+      +4.0, -2.0,
+      +4.0, +2.0,
+      +3.0, +3.0,
+      +1.0, +3.0,
     ];
 
-    let wall2 = new Wall2(simpleRoomData);
-    let wall2Mesh = wall2.createMesh();
+    let homepageRoom = new Wall2(simpleRoomData);
+    let homepageRoomMesh = homepageRoom.createMesh(wallParams);
+    this.attachTexture(homepageRoomMesh, require("./images/papers.jpg"));
+    this.scene.addMesh(homepageRoomMesh);
 
-    // let myMaterial = new BABYLON.StandardMaterial("myMaterial", this.scene);
 
-    // myMaterial.diffuseTexture = new BABYLON.Texture(require("./images/brick.jpg"), this.scene);
-    // wall2Mesh.material = myMaterial;
+    const landingLeftWallData = [
+      -1.0, +10.0,
+      -1.0, +0.0,
+    ];
 
-    var mat = new BABYLON.StandardMaterial("dog", this.scene);
-    mat.diffuseTexture = new BABYLON.Texture(require("./images/papers.jpg"), this.scene);
-    mat.diffuseTexture.hasAlpha = false;
-    mat.backFaceCulling = false;
+    let landingLeftWall = new Wall2(landingLeftWallData);
+    let landingLeftWallMesh = landingLeftWall.createMesh(wallParams);
 
-    var myMaterial3 = new BABYLON.StandardMaterial("myMaterial", this.scene);
-    
-    myMaterial3.diffuseColor = new BABYLON.Color3(0, 0, 1);
-    // myMaterial3.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
-    // myMaterial3.emissiveColor = new BABYLON.Color3(1, 1, 1);
-    // myMaterial3.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
-    
+    this.attachTexture(landingLeftWallMesh, require("./images/sky.jpg"));
+    landingLeftWallMesh.position.z = 3 + wallThickness;
+    this.scene.addMesh(landingLeftWallMesh);
 
-    wall2Mesh.material = mat;
+    const landingRightWallData = [
+      +1.0, +0.0,
+      +1.0, +10.0
+    ];
 
-    this.scene.addMesh(wall2Mesh);
+    let landingRightWall = new Wall2(landingRightWallData);
+    let landingRightWallMesh = landingRightWall.createMesh(wallParams);
+
+    this.attachTexture(landingRightWallMesh, require("./images/sky.jpg"));
+    landingRightWallMesh.position.z = 3 + wallThickness;
+    this.scene.addMesh(landingRightWallMesh);
+
+
+
+
+
+    this.scene.addMesh(homepageRoomMesh);
 
     this.initPlayer();
   }
 
+  attachTexture = (mesh: BABYLON.Mesh, url: string) => {
+    var mat = new BABYLON.StandardMaterial("material", this.scene);
+
+    mat.diffuseTexture = new BABYLON.Texture(url, this.scene);
+    mat.diffuseTexture.hasAlpha = false;
+    mat.backFaceCulling = false;
+
+    mesh.material = mat;
+  }
+
+
   initPlayer = (): void => {
-    const spawnPoint = new BABYLON.Vector3(0, 2, -20);
+    const spawnPoint = new BABYLON.Vector3(0, 1, 0);
     this.playerCamera = new BABYLON.FreeCamera("camera", spawnPoint, this.scene);
 
-    // this.playerCamera.attachControl(this.canvas);
-    this.playerCamera.ellipsoid = new BABYLON.Vector3(2, 2, 2);
+    this.playerCamera.attachControl(this.canvas);
+    this.playerCamera.ellipsoid = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
     this.playerCamera.checkCollisions = true;
     this.playerCamera.applyGravity = true;
@@ -126,9 +157,9 @@ class Application {
     this.playerCamera.keysLeft = [65]; // A
     this.playerCamera.keysRight = [68]; // D
 
-    this.playerCamera.speed = 5;
-    this.playerCamera.inertia = 0.4;
-    this.playerCamera.angularSensibility = 1100;
+    this.playerCamera.speed = 1;
+    this.playerCamera.inertia = 0.5;
+    this.playerCamera.angularSensibility = 500;
   }
 }
 
