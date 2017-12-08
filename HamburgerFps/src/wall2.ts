@@ -240,32 +240,6 @@ export class Wall2 {
                 outerTopEndCornerDupIndex
             ];
 
-
-
-            // const trianleStart1 = [
-            //     0,
-            //     (bottomInnerPositions.length + topInnerPositions.length) / elementsForOnePosition,
-            //     bottomInnerPositions.length / elementsForOnePosition
-            // ];
-
-            // const trianleStart2 = [
-            //     bottomInnerPositions.length / elementsForOnePosition,
-            //     (bottomInnerPositions.length + topInnerPositions.length) / elementsForOnePosition,
-            //     (bottomInnerPositions.length + topInnerPositions.length + bottomOuterPositions.length) / elementsForOnePosition
-            // ];
-
-            // const triangleEnd1 = [
-            //     (bottomInnerPositions.length + topInnerPositions.length + bottomOuterPositions.length) / elementsForOnePosition - 1,
-            //     (bottomInnerPositions.length) / elementsForOnePosition - 1,
-            //     (bottomInnerPositions.length + topInnerPositions.length + bottomOuterPositions.length + topOuterPositions.length) / elementsForOnePosition - 1
-            // ];
-
-            // const triangleEnd2 = [
-            //     (bottomInnerPositions.length) / elementsForOnePosition - 1,
-            //     (bottomInnerPositions.length + topInnerPositions.length) / elementsForOnePosition - 1,
-            //     (bottomInnerPositions.length + topInnerPositions.length + bottomOuterPositions.length + topOuterPositions.length) / elementsForOnePosition - 1
-            // ];
-
             const edgeIndices = []
                 .concat(trianleStart1)
                 .concat(trianleStart2)
@@ -277,15 +251,9 @@ export class Wall2 {
 
         let normals = [];
 
-
-
-
         BABYLON.VertexData.ComputeNormals(positions, indices, normals);
         // (BABYLON.VertexData as any)._ComputeSides(BABYLON.Mesh.DOUBLESIDE, positions, indices, normals, uvs);
         // debugger;
-
-
-
 
         //Create a custom mesh  
         var customMesh = new BABYLON.Mesh("custom");
