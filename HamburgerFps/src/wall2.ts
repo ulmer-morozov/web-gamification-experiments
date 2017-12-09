@@ -96,6 +96,13 @@ export class Wall2 {
             let prevDirectionNormal = new BABYLON.Vector2(prevDirection.y, -1 * prevDirection.x);
             prevDirectionNormal.normalize();
 
+            // const etalonDirection = new BABYLON.Vector2(0, 1);
+            // const normalProjection = BABYLON.Vector2.Dot(prevDirectionNormal, etalonDirection);
+            // debugger;
+
+            // if (normalProjection > 0)
+            //     prevDirectionNormal.y *= -1;
+
             let wallVector = prevDirectionNormal.scale(wallThickness);
             let angleX = (Math.PI - angleBetween) / 2;
 
