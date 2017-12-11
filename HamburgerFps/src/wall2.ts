@@ -62,6 +62,9 @@ export class Wall2 {
         let prevDirection = BABYLON.Vector2.Zero();
         let currDirection = BABYLON.Vector2.Zero();
 
+        let prevDirection3 = BABYLON.Vector3.Zero();
+        let currDirection3 = BABYLON.Vector3.Zero();
+
         let outerCorners = new Array<BABYLON.Vector2>();
 
 
@@ -96,19 +99,19 @@ export class Wall2 {
             let prevDirectionNormal = new BABYLON.Vector2(prevDirection.y, -1 * prevDirection.x);
             prevDirectionNormal.normalize();
 
-            // const etalonDirection = new BABYLON.Vector2(0, 1);
-            // const normalProjection = BABYLON.Vector2.Dot(prevDirectionNormal, etalonDirection);
-            // debugger;
+            prevDirection3.x = prevDirection.x;
+            prevDirection3.z = prevDirection.y;
 
-            // if (normalProjection > 0)
-            //     prevDirectionNormal.y *= -1;
+            currDirection3.x = currDirection.x;
+            currDirection3.z = currDirection.y;
 
+            let res = BABYLON.Vector3.Cross(prevDirection3, currDirection3);
             let wallVector = prevDirectionNormal.scale(wallThickness);
             let angleX = (Math.PI - angleBetween) / 2;
 
             let tangleX = Math.tan(angleX);
             let cSideLength = tangleX === 0 ? 0 : wallThickness / tangleX;
-            let cSideVector = prevDirection.scale(cSideLength);
+            let cSideVector = prevDirection.scale(- Math.sign(res.y) * cSideLength);
 
             let relativeOuterCornerVector = wallVector.add(cSideVector);
             let outerCornerVector = currentCorner.add(relativeOuterCornerVector);
