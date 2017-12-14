@@ -1,11 +1,12 @@
 import * as BABYLON from 'babylonjs';
+import { Orientation } from './wallOrientation';
 
 const elementsForOnePosition = 3;// (x, y, z)
 
 export class Wall2 {
     public corners: BABYLON.Vector2[];
 
-    constructor(cornerData: number[]) {
+    constructor(cornerData: number[], orientation: Orientation) {
         if (cornerData == undefined)
             throw new Error("для создания стены необходимы данные");
 
@@ -24,9 +25,14 @@ export class Wall2 {
             const newCorner = new BABYLON.Vector2(x, y);
             this.corners.push(newCorner);
         }
+
+        if (orientation === Orientation.Right)
+            this.corners = this.corners.reverse();
     }
 
     createMesh = (params: { wallHeight: number, wallThickness: number }): BABYLON.Mesh => {
+
+        this.corners = this.corners.reverse();
         const wallHeight = params.wallHeight;
         const wallThickness = params.wallThickness;
 
