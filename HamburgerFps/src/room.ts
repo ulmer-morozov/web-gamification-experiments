@@ -47,7 +47,7 @@ export class Room extends BABYLON.Mesh {
         return wallMesh;
     }
 
-    createFloor = (floorWidth: number, floorHeight, textureUrl: string): BABYLON.Mesh => {
+    createFloor = (floorWidth: number, floorHeight, textureUrl: string = undefined): BABYLON.Mesh => {
         const sourcePlane = new BABYLON.Plane(0, -1, 0, 0);
         sourcePlane.normalize();
 
@@ -60,14 +60,15 @@ export class Room extends BABYLON.Mesh {
         const floor = BABYLON.MeshBuilder.CreatePlane("floor", options, this.scene);
 
         floor.position.y = 0.01;
-        floor.material = this.createMaterial(textureUrl);
         floor.checkCollisions = true;
         floor.parent = this;
 
+        if (textureUrl != undefined)
+            floor.material = this.createMaterial(textureUrl);
         return floor;
     }
 
-    createCeiling = (ceilingWidth: number, ceilingHeight, textureUrl: string): BABYLON.Mesh => {
+    createCeiling = (ceilingWidth: number, ceilingHeight, textureUrl: string = undefined): BABYLON.Mesh => {
         const sourcePlane = new BABYLON.Plane(0, 1, 0, 0);
         sourcePlane.normalize();
 
@@ -80,8 +81,10 @@ export class Room extends BABYLON.Mesh {
         const ceiling = BABYLON.MeshBuilder.CreatePlane("floor", options, this.scene);
 
         ceiling.position.y = 0.01;
-        ceiling.material = this.createMaterial(textureUrl);
         ceiling.parent = this;
+
+        if (textureUrl)
+            ceiling.material = this.createMaterial(textureUrl);
 
         return ceiling;
     }
@@ -106,5 +109,31 @@ export class Room extends BABYLON.Mesh {
         plane.parent = this;
 
         return plane;
+    }
+
+    addPointLight = (color: BABYLON.Color3, position: BABYLON.Vector3, helper: boolean = false): BABYLON.Light => {
+        const light = new BABYLON.PointLight("Light", position, this.scene);
+        light.diffuse = color;
+        light.parent = this;
+
+        if (!helper)
+            return light;
+
+        const cubeMaterial = new BABYLON.StandardMaterial("cubeMat", this.scene);
+        cubeMaterial.emissiveColor = color;
+        cubeMaterial.disableLighting = true;
+
+        const cubeParams: any = {
+            width: 0.2,
+            height: 0.2,
+            depth: 0.2
+        };
+
+        const cube = BABYLON.MeshBuilder.CreateBox("cube", cubeParams, this.scene);
+        cube.position.copyFrom(position);
+        cube.material = cubeMaterial;
+        cube.parent = this;
+
+        return light;
     }
 }

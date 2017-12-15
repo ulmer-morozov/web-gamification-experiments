@@ -4,6 +4,7 @@ import { HomeRoom } from './homeRoom';
 import { LandingRoom } from './landingRoom';
 import { AboutRoom } from './aboutRoom';
 import { FooterRoom } from './footerRoom';
+import { NewsRoom } from './newsRoom';
 
 //decalrations
 declare function require(name: string);
@@ -56,9 +57,7 @@ class Application {
   }
 
   initPlayer = (): void => {
-    // const spawnPoint = new BABYLON.Vector3(-19.9, 1.6, 55.5);
-    const spawnPoint = new BABYLON.Vector3(0, 1.6, 32);
-    // const spawnPoint = new BABYLON.Vector3(0, 1.6, -2);
+    const spawnPoint = new BABYLON.Vector3(16.223273766674208, 1.6049999998807911, 54.022927347505885);
     this.playerCamera = new BABYLON.FreeCamera("camera", spawnPoint, this.scene);
 
     this.playerCamera.attachControl(this.canvas);
@@ -78,7 +77,7 @@ class Application {
 
     //for test purpuse
     (document as any).getPlayerPosition = () => {
-      console.log("position: " + this.playerCamera.position);
+      console.log(`position: {${this.playerCamera.position.x}, ${this.playerCamera.position.y}, ${this.playerCamera.position.z}}`);
     }
   }
 
@@ -98,7 +97,10 @@ class Application {
     aboutRoom.position.set(0, 0, 45);
 
     const footerRoom = new FooterRoom(this.scene);
-    footerRoom.position = new BABYLON.Vector3(-20, 0, 60);
+    footerRoom.position.set(-20, 0, 60);
+
+    const newsRoom = new NewsRoom(this.scene);
+    newsRoom.position.set(15 + 2 * newsRoom.wallThickness, 0, 51);
 
     this.initPlayer();
   }
