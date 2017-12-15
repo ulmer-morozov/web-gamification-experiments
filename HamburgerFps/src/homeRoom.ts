@@ -7,6 +7,11 @@ import { Texture } from 'babylonjs';
 //decalrations
 declare function require(name: string);
 
+// const BABYLON = require('babylonjs/dist/preview release/proceduralTexturesLibrary/babylonjs.proceduralTextures')
+
+// import * as sad from 'babylonjs/dist/preview release/materialsLibrary/babylonjs-materials'
+
+// debugger;
 export class HomeRoom extends Room {
     constructor(scene: BABYLON.Scene) {
         super(scene);
@@ -43,9 +48,16 @@ export class HomeRoom extends Room {
         floor.position.z = -wallThickness;
         floor.checkCollisions = false;
 
+
+
+
         const floorTexture = ((floor.material as BABYLON.StandardMaterial).diffuseTexture as Texture);
         floorTexture.uScale = floorWidth;
         floorTexture.vScale = floorHeight;
+
+        // floor.material = new BABYLON.WoodProceduralTexture("texture", 1024, scene);
+        // debugger
+
 
         const ceiling = this.createCeiling(floorWidth, floorHeight, require("./images/wood4.jpg"));
         ceiling.position.z = -wallThickness;

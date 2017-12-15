@@ -61,6 +61,26 @@ export class AboutRoom extends Room {
       defaultWallParams
     );
 
+    const nearResourcesLeftWall = this.createWallMesh(
+      [
+        +10.0, +15.0,
+        -17.0 - wallThickness, +15.0,
+      ],
+      Orientation.Right,
+      defaultWallParams
+    );
+
+    const nearResourcesRightWall = this.createWallMesh(
+      [
+        +15.0, +11.0,
+        +15.0, +15.0,
+        +13.0, +15.0,
+      ],
+      Orientation.Right,
+      defaultWallParams
+    );
+
+
     const nextFloorData = [
       -12.0, +0.0,
       -12.0, +0.0,
@@ -105,6 +125,8 @@ export class AboutRoom extends Room {
     aboutUsFrontWall.material = aboutRoomMaterial;
     aboutUsBackLeftWall.material = aboutRoomMaterial;
     aboutUsBackRightWall.material = aboutRoomMaterial;
+    nearResourcesRightWall.material = aboutRoomMaterial
+    nearResourcesLeftWall.material = aboutRoomMaterial;
 
     secondFloorWall.material = aboutRoomMaterial;
     thirdFloorWall.material = aboutRoomMaterial;

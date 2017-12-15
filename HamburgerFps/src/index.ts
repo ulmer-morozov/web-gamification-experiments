@@ -57,7 +57,7 @@ class Application {
   }
 
   initPlayer = (): void => {
-    const spawnPoint = new BABYLON.Vector3(16.223273766674208, 1.6049999998807911, 54.022927347505885);
+    const spawnPoint = new BABYLON.Vector3(14.223273766674208, 1.6049999998807911, 54.022927347505885);
     this.playerCamera = new BABYLON.FreeCamera("camera", spawnPoint, this.scene);
 
     this.playerCamera.attachControl(this.canvas);

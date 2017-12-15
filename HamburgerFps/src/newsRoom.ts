@@ -62,6 +62,7 @@ export class NewsRoom extends Room {
             depth: 3
         };
 
+
         const wallFixerMaterial = new BABYLON.StandardMaterial("cubeMat", scene);
         wallFixerMaterial.emissiveColor = new Color3(0.1, 0.1, 0.1);
         wallFixerMaterial.specularPower = 0.3;
@@ -129,7 +130,7 @@ export class NewsRoom extends Room {
             blueSideMaterial.vOffset = 0.01;
         }
 
-        const ledCount = 5;
+        const ledCount = 7;
         for (let i = 1; i < ledCount; i++) {
             const x = size / 2;
             const z = i * size / ledCount;
@@ -138,7 +139,7 @@ export class NewsRoom extends Room {
             addLedBar(x, z, textureOffset);
 
 
-            if (i === 3) {
+            if (i === 4) {
                 const blueLightColor = new BABYLON.Color3(0, 0, 1);
                 const blueLightPosition = new BABYLON.Vector3(x - 0.5, newsRoomWallParams.wallHeight / 2, z);
 
