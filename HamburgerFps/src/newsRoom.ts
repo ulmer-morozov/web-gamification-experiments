@@ -9,7 +9,7 @@ declare function require(name: string);
 
 export class NewsRoom extends Room {
     constructor(scene: BABYLON.Scene) {
-        super(scene);
+        super(scene, "news-room", NewsRoom.createTrigerVolume());
 
         // aliases
         const gap = this.gap;
@@ -32,7 +32,6 @@ export class NewsRoom extends Room {
             Orientation.Right,
             newsRoomWallParams
         );
-        newsRoomWallMesh.material = this.createMaterial(require("./images/brick.jpg"));
 
         const wallMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
 
@@ -182,6 +181,20 @@ export class NewsRoom extends Room {
         }
 
 
+    }
+
+    static createTrigerVolume = (): BABYLON.Mesh => {
+        const roofParams = {
+            height: 5,
+            width: 24,
+            depth: 24
+        };
+
+        const mesh = BABYLON.MeshBuilder.CreateBox("roof", roofParams);
+        mesh.position.set(roofParams.width / 2, roofParams.height / 2, roofParams.depth / 2);
+        // mesh.setEnabled(false);
+        // mesh.isVisible = false;
+        return mesh;
     }
 
 

@@ -2,19 +2,19 @@ import * as BABYLON from 'babylonjs';
 
 import { Room } from "./room";
 import { Orientation } from "./wallOrientation";
-import { Texture } from 'babylonjs';
+import { Texture, Color3 } from 'babylonjs';
 
 //decalrations
 declare function require(name: string);
 
-// const BABYLON = require('babylonjs/dist/preview release/proceduralTexturesLibrary/babylonjs.proceduralTextures')
+const _BABYLON = require('babylonjs/dist/preview release/proceduralTexturesLibrary/babylonjs.proceduralTextures')
 
 // import * as sad from 'babylonjs/dist/preview release/materialsLibrary/babylonjs-materials'
 
 // debugger;
 export class HomeRoom extends Room {
     constructor(scene: BABYLON.Scene) {
-        super(scene);
+        super(scene, "home-room", HomeRoom.createTrigerVolume());
 
         // aliases
         const defaultWallParams = this.defaultWallParams;
@@ -43,29 +43,29 @@ export class HomeRoom extends Room {
         );
         homepageRoomMesh.material = this.createMaterial(require("./images/papers3.jpg"));
 
+        const woodTexture = new _BABYLON.WoodProceduralTexture("texture", 256, scene);
+        // woodTexture.woodColor = new Color3(1, 0, 1);
+        woodTexture.uScale = floorWidth;
+        woodTexture.vScale = floorHeight / 4;
+        woodTexture.ampScale = 200.0;
 
-        const floor = this.createFloor(floorWidth, floorHeight, require("./images/red_wood_floor.jpg"));
+        // debugger;
+        const floor = this.createFloor(floorWidth, floorHeight);
         floor.position.z = -wallThickness;
         floor.checkCollisions = false;
+        floor.material = this.createDefaultMaterial(woodTexture);
 
+        const darkWoodTexture = new _BABYLON.WoodProceduralTexture("texture", 256, scene);
+        darkWoodTexture.woodColor = new Color3(17 / 255, 11 / 255, 5 / 255);
+        darkWoodTexture.uScale = floorWidth;
+        darkWoodTexture.vScale = floorHeight / 4;
+        darkWoodTexture.ampScale = 200.0;
 
-
-
-        const floorTexture = ((floor.material as BABYLON.StandardMaterial).diffuseTexture as Texture);
-        floorTexture.uScale = floorWidth;
-        floorTexture.vScale = floorHeight;
-
-        // floor.material = new BABYLON.WoodProceduralTexture("texture", 1024, scene);
-        // debugger
-
-
-        const ceiling = this.createCeiling(floorWidth, floorHeight, require("./images/wood4.jpg"));
+        const ceiling = this.createCeiling(floorWidth, floorHeight);
         ceiling.position.z = -wallThickness;
         ceiling.position.y = wallHeight - 2 * gap;
+        ceiling.material = this.createDefaultMaterial(darkWoodTexture);
 
-        const ceilingTexture = ((ceiling.material as BABYLON.StandardMaterial).diffuseTexture as Texture);
-        ceilingTexture.uScale = floorWidth / 2;
-        ceilingTexture.vScale = floorHeight / 2;
 
         //внешний контур дома
         const homepageOuterRoomMesh = this.createWallMesh(
@@ -96,5 +96,18 @@ export class HomeRoom extends Room {
         const roof = BABYLON.MeshBuilder.CreateBox("roof", roofParams, scene);
         roof.position.y = defaultWallParams.wallHeight + roofParams.height / 2;
         roof.material = ceiling.material;
+    }
+
+    static createTrigerVolume = (): BABYLON.Mesh => {
+        const roofParams = {
+            height: 5,
+            width: 10,
+            depth: 8
+        };
+
+        const mesh = BABYLON.MeshBuilder.CreateBox("roof", roofParams);
+        mesh.position.set(0, roofParams.height / 2, 0);
+
+        return mesh;
     }
 }

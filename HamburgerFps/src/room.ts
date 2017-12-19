@@ -2,7 +2,6 @@ import { Wall } from "./wall";
 import { Orientation } from "./wallOrientation";
 
 export class Room extends BABYLON.Mesh {
-
     wallHeight = 3.5;
     wallThickness = this.wallHeight / 5;
     gap = 0.001;
@@ -12,8 +11,17 @@ export class Room extends BABYLON.Mesh {
         wallThickness: this.wallThickness
     };
 
-    constructor(private scene: BABYLON.Scene) {
+    public priority: number = 0;
+
+    constructor(protected scene: BABYLON.Scene, public roomName: string, public trigerVolume: BABYLON.Mesh = undefined) {
         super("roomBase", scene);
+
+        // scene.addMesh(trigerVolume);
+        if (this.trigerVolume) {
+            this.trigerVolume.parent = this;
+            // (this.trigerVolume.material as BABYLON.StandardMaterial).disableLighting = true;
+
+        }
     }
 
     createMaterial = (url: string, params: { uOffset?: number, vOffset?: number } = undefined): BABYLON.StandardMaterial => {
@@ -41,7 +49,7 @@ export class Room extends BABYLON.Mesh {
         const wallMesh = wall.createMesh(wallParams);
 
         wallMesh.physicsImpostor = new BABYLON.PhysicsImpostor(wallMesh, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 0, restitution: 0.3 });
-        wallMesh.checkCollisions = true;
+        // wallMesh.checkCollisions = true;
         wallMesh.parent = this;
 
         return wallMesh;
@@ -63,8 +71,9 @@ export class Room extends BABYLON.Mesh {
         floor.checkCollisions = true;
         floor.parent = this;
 
-        if (textureUrl != undefined)
+        if (textureUrl !== undefined)
             floor.material = this.createMaterial(textureUrl);
+
         return floor;
     }
 
@@ -83,10 +92,22 @@ export class Room extends BABYLON.Mesh {
         ceiling.position.y = 0.01;
         ceiling.parent = this;
 
-        if (textureUrl)
+        if (textureUrl !== undefined)
             ceiling.material = this.createMaterial(textureUrl);
 
         return ceiling;
+    }
+
+    createDefaultMaterial = (texture: BABYLON.Texture): BABYLON.StandardMaterial => {
+        const material = new BABYLON.StandardMaterial("ceilingMaterial", this.scene);
+
+        material.diffuseTexture = texture
+        material.diffuseTexture.hasAlpha = false;
+        material.backFaceCulling = true;
+        material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+        material.disableLighting = true;
+
+        return material;
     }
 
     addPainting = (imageUrl: string, paintingWidth: number, paintingHeight: number): BABYLON.Mesh => {

@@ -9,7 +9,7 @@ declare function require(name: string);
 
 export class FooterRoom extends Room {
     constructor(scene: BABYLON.Scene) {
-        super(scene);
+        super(scene, "footer-room");
 
         // aliases
         const defaultWallParams = this.defaultWallParams;

@@ -5,6 +5,7 @@ import { LandingRoom } from './landingRoom';
 import { AboutRoom } from './aboutRoom';
 import { FooterRoom } from './footerRoom';
 import { NewsRoom } from './newsRoom';
+import { Room } from './room';
 
 //decalrations
 declare function require(name: string);
@@ -16,6 +17,8 @@ class Application {
   private camera: BABYLON.ArcRotateCamera;
 
   private playerCamera: BABYLON.FreeCamera;
+  private rooms: Room[];
+  private currentRoom: string;
 
   constructor() {
     this.initEngine();
@@ -57,7 +60,7 @@ class Application {
   }
 
   initPlayer = (): void => {
-    const spawnPoint = new BABYLON.Vector3(14.223273766674208, 1.6049999998807911, 54.022927347505885);
+    const spawnPoint = new BABYLON.Vector3(-1.5528247609216643, 1.60499999988079, 49.110123291003504);
     this.playerCamera = new BABYLON.FreeCamera("camera", spawnPoint, this.scene);
 
     this.playerCamera.attachControl(this.canvas);
@@ -102,7 +105,52 @@ class Application {
     const newsRoom = new NewsRoom(this.scene);
     newsRoom.position.set(15 + 2 * newsRoom.wallThickness, 0, 51);
 
+    this.rooms = [
+      homeRoom,
+      landingRoom,
+      aboutRoom,
+      footerRoom,
+      newsRoom
+    ];
+
     this.initPlayer();
+
+    setInterval(() => {
+      for (let i = 0; i < this.rooms.length; i++) {
+        const room = this.rooms[i];
+
+        if (room.trigerVolume && this.currentRoom !== room.roomName && room.trigerVolume.intersectsPoint(this.playerCamera.position)) {
+          const oldRoomName = this.currentRoom;
+          this.currentRoom = room.roomName;
+          this.roomChangeHandler(this.currentRoom, oldRoomName);
+          break;
+        }
+      }
+    }, 300);
+  }
+
+  roomChangeHandler = (roomName: string, prevRoomName: string): void => {
+    console.log("intersection: " + roomName);
+    this.hideRoom(prevRoomName);
+    this.showRoom(roomName);
+  }
+
+  showRoom = (roomName: string): void => {
+    const roomElement = document.getElementById(roomName);
+
+    if (roomElement == undefined || !roomElement.classList.contains("hidden"))
+      return;
+
+    roomElement.classList.remove("hidden");
+  }
+
+  hideRoom = (roomName: string): void => {
+    const roomElement = document.getElementById(roomName);
+
+    if (roomElement == undefined || roomElement.classList.contains("hidden"))
+      return;
+
+    roomElement.classList.add("hidden");
   }
 }
 
