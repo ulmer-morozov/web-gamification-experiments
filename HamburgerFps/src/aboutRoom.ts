@@ -180,14 +180,14 @@ export class AboutRoom extends Room {
     woodSample.position.set(0, defaultSamplePositionY, 7);
     woodSample.material = this.createDefaultMaterial(woodTexture);
 
-    const fireTexture = new _BABYLON.FireProceduralTexture("texture", 256, scene);
+    const fireTexture = new _BABYLON.FireProceduralTexture("texture", 64, scene);
     fireTexture.ampScale = 200.0;
 
     const fireSample = this.createResourceSample();
     fireSample.position.set(-4, defaultSamplePositionY, 7);
     fireSample.material = this.createDefaultMaterial(fireTexture);
 
-    const earthTexture = new _BABYLON.CloudProceduralTexture("texture", 256, scene);
+    const earthTexture = new _BABYLON.CloudProceduralTexture("texture", 64, scene);
     earthTexture.ampScale = 200.0;
 
     const earthSample = this.createResourceSample();
@@ -205,7 +205,6 @@ export class AboutRoom extends Room {
     };
 
     const resourceMesh = BABYLON.MeshBuilder.CreateBox("resource", cubeParams, this.scene);
-    // resourceMesh.checkCollisions = true;
     resourceMesh.parent = this;
 
     return resourceMesh;

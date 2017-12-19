@@ -149,10 +149,6 @@ export class NewsRoom extends Room {
                 blueLight.intensity = 0.5;
                 blueLight.parent = this;
 
-                // const blueLight = this.addPointLight(blueLightColor, blueLightPosition, true);
-                // blueLight.intensity = 0.5;
-                // blueLight.specular = blueLightColor;
-
                 const redLightColor = new BABYLON.Color3(1, 0, 0);
                 const redLightPosition = new BABYLON.Vector3(x + 0.5, newsRoomWallParams.wallHeight / 2, z);
 
@@ -163,23 +159,16 @@ export class NewsRoom extends Room {
                 redLight.intensity = 0.5;
                 redLight.parent = this;
 
-                // const redLight = this.addPointLight(redLightColor, redLightPosition, true);
-                // redLight.intensity = 0.5;
-                // redLight.specular = redLightColor;
-
-                // // Shadows
-                // var shadowGenerator1 = new BABYLON.ShadowGenerator(1024, blueLight);
-                // shadowGenerator1.getShadowMap().renderList = renderListObjects;
-                // shadowGenerator1.useBlurExponentialShadowMap = true;
-                // shadowGenerator1.useKernelBlur = true;
-                // shadowGenerator1.blurKernel = 64;
-
-
-
 
             }
         }
 
+        const coinY = 0.5;
+        this.addCoin(18, coinY, 4);
+        this.addCoin(18, coinY, 8);
+        this.addCoin(18, coinY, 12);
+        this.addCoin(18, coinY, 16);
+        this.addCoin(18, coinY, 20);
 
     }
 
@@ -192,8 +181,6 @@ export class NewsRoom extends Room {
 
         const mesh = BABYLON.MeshBuilder.CreateBox("roof", roofParams);
         mesh.position.set(roofParams.width / 2, roofParams.height / 2, roofParams.depth / 2);
-        // mesh.setEnabled(false);
-        // mesh.isVisible = false;
         return mesh;
     }
 

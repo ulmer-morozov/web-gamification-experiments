@@ -6,6 +6,7 @@ import { AboutRoom } from './aboutRoom';
 import { FooterRoom } from './footerRoom';
 import { NewsRoom } from './newsRoom';
 import { Room } from './room';
+import { Player } from './player';
 
 //decalrations
 declare function require(name: string);
@@ -18,7 +19,10 @@ class Application {
 
   private playerCamera: BABYLON.FreeCamera;
   private rooms: Room[];
-  private currentRoom: string;
+  private currentRoom: Room;
+  private player: Player;
+
+  private scoreElement: HTMLElement;
 
   constructor() {
     this.initEngine();
@@ -30,12 +34,31 @@ class Application {
   }
 
   render = () => {
+    this.calcIntersectionsWithCollectables();
     this.scene.render();
     const fpsLabel = document.getElementById("fpsLabel");
     fpsLabel.innerHTML = this.engine.getFps().toFixed() + " fps";
   }
 
   run = (): void => {
+    this.player = new Player();
+
+    this.player.collider = BABYLON.MeshBuilder.CreateSphere("playerCollider", {
+      diameter: 3
+    }, null);
+
+    this.player.collider.isVisible = false;
+    // this.player.collider.position.z = 2;
+    this.player.collider.parent = this.playerCamera;
+
+    this.player.onScoreChanged = (newScore: number) => {
+      this.setScore(newScore);
+    }
+
+    this.setScore(0);
+
+
+
     this.engine.runRenderLoop(this.render);
   }
 
@@ -48,19 +71,35 @@ class Application {
     // debugger;;
     this.scene.enablePhysics();
     this.canvas.focus();
+
+
+
+
     // this.camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
     // this.camera.attachControl(this.canvas, true);
   }
 
-  initAssets = (): void => {
+  calcIntersectionsWithCollectables = () => {
+    if (this.currentRoom == undefined)
+      return;
 
+    for (let i = 0; i < this.currentRoom.collectables.length; i++) {
+      const collectable = this.currentRoom.collectables[i];
+
+      collectable.tryCollect(this.player);
+      collectable.updateAnimation();
+    }
+  }
+
+  initAssets = (): void => {
+    this.scoreElement = document.getElementById("score");
   }
 
   bindEvents = (): void => {
   }
 
   initPlayer = (): void => {
-    const spawnPoint = new BABYLON.Vector3(-1.5528247609216643, 1.60499999988079, 49.110123291003504);
+    const spawnPoint = new BABYLON.Vector3(25.476913280864128, 1.6179999994039513, 52.31300114440918);
     this.playerCamera = new BABYLON.FreeCamera("camera", spawnPoint, this.scene);
 
     this.playerCamera.attachControl(this.canvas);
@@ -119,14 +158,14 @@ class Application {
       for (let i = 0; i < this.rooms.length; i++) {
         const room = this.rooms[i];
 
-        if (room.trigerVolume && this.currentRoom !== room.roomName && room.trigerVolume.intersectsPoint(this.playerCamera.position)) {
-          const oldRoomName = this.currentRoom;
-          this.currentRoom = room.roomName;
-          this.roomChangeHandler(this.currentRoom, oldRoomName);
+        if (room.trigerVolume && this.currentRoom !== room && room.trigerVolume.intersectsPoint(this.playerCamera.position)) {
+          const oldRoomName = this.currentRoom == undefined ? '' : this.currentRoom.roomName;
+          this.currentRoom = room;
+          this.roomChangeHandler(room.roomName, oldRoomName);
           break;
         }
       }
-    }, 300);
+    }, 50);
   }
 
   roomChangeHandler = (roomName: string, prevRoomName: string): void => {
@@ -151,6 +190,10 @@ class Application {
       return;
 
     roomElement.classList.add("hidden");
+  }
+
+  setScore = (newScore: number): void => {
+    this.scoreElement.innerText = `${newScore}`;
   }
 }
 

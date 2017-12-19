@@ -9,7 +9,7 @@ declare function require(name: string);
 
 export class FooterRoom extends Room {
     constructor(scene: BABYLON.Scene) {
-        super(scene, "footer-room");
+        super(scene, "footer-room", FooterRoom.createTrigerVolume());
 
         // aliases
         const defaultWallParams = this.defaultWallParams;
@@ -91,5 +91,26 @@ export class FooterRoom extends Room {
         // });
         // stairs.physicsImpostor.friction = 0;
 
+        const coinY = 0.5 - 3.5;
+
+        for (let coinX = -7; coinX < -2; coinX += 3)
+            for (let coinZ = 0; coinZ < 36; coinZ += 4)
+                this.addCoin(coinX, coinY, coinZ);
+
+
+    }
+
+    static createTrigerVolume = (): BABYLON.Mesh => {
+        const roofParams = {
+            height: 6,
+            width: 23,
+            depth: 40
+        };
+
+        const mesh = BABYLON.MeshBuilder.CreateBox("boundBox", roofParams);
+        mesh.position.set(-8.5, roofParams.height / 2 - 3, roofParams.depth / 2 + 0.5);
+        // mesh.setEnabled(false);
+        // mesh.isVisible = false;
+        return mesh;
     }
 }

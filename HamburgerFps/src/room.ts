@@ -1,5 +1,7 @@
 import { Wall } from "./wall";
 import { Orientation } from "./wallOrientation";
+import { Collectable } from "./collectable";
+import { Coin } from "./coin";
 
 export class Room extends BABYLON.Mesh {
     wallHeight = 3.5;
@@ -12,13 +14,17 @@ export class Room extends BABYLON.Mesh {
     };
 
     public priority: number = 0;
+    public collectables: Collectable[];
 
     constructor(protected scene: BABYLON.Scene, public roomName: string, public trigerVolume: BABYLON.Mesh = undefined) {
         super("roomBase", scene);
 
+        this.collectables = [];
+
         // scene.addMesh(trigerVolume);
         if (this.trigerVolume) {
             this.trigerVolume.parent = this;
+            this.trigerVolume.isVisible = false;
             // (this.trigerVolume.material as BABYLON.StandardMaterial).disableLighting = true;
 
         }
@@ -49,7 +55,7 @@ export class Room extends BABYLON.Mesh {
         const wallMesh = wall.createMesh(wallParams);
 
         wallMesh.physicsImpostor = new BABYLON.PhysicsImpostor(wallMesh, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 0, restitution: 0.3 });
-        // wallMesh.checkCollisions = true;
+        wallMesh.checkCollisions = true;
         wallMesh.parent = this;
 
         return wallMesh;
@@ -104,8 +110,8 @@ export class Room extends BABYLON.Mesh {
         material.diffuseTexture = texture
         material.diffuseTexture.hasAlpha = false;
         material.backFaceCulling = true;
-        material.emissiveColor = new BABYLON.Color3(1, 1, 1);
         material.disableLighting = true;
+        material.emissiveColor = new BABYLON.Color3(1, 1, 1);
 
         return material;
     }
@@ -156,5 +162,16 @@ export class Room extends BABYLON.Mesh {
         cube.parent = this;
 
         return light;
+    }
+
+    registerCollectable = (collectable: Collectable) => {
+        collectable.parent = this;
+        this.collectables.push(collectable);
+    }
+
+    addCoin = (x: number, y: number, z: number): void => {
+        const coin = new Coin();
+        coin.position.set(x, y, z);
+        this.registerCollectable(coin);
     }
 }

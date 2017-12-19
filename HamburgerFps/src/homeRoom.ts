@@ -44,12 +44,10 @@ export class HomeRoom extends Room {
         homepageRoomMesh.material = this.createMaterial(require("./images/papers3.jpg"));
 
         const woodTexture = new _BABYLON.WoodProceduralTexture("texture", 256, scene);
-        // woodTexture.woodColor = new Color3(1, 0, 1);
         woodTexture.uScale = floorWidth;
         woodTexture.vScale = floorHeight / 4;
         woodTexture.ampScale = 200.0;
 
-        // debugger;
         const floor = this.createFloor(floorWidth, floorHeight);
         floor.position.z = -wallThickness;
         floor.checkCollisions = false;
@@ -88,7 +86,7 @@ export class HomeRoom extends Room {
         homepageOuterRoomMesh.material = homeWallMaterial;
 
         const roofParams = {
-            height: 1 * wallThickness,
+            height: 2 * wallThickness,
             width: 11 + 2 * wallThickness,
             depth: 9 + 2 * wallThickness
         };

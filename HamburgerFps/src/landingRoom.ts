@@ -3,6 +3,7 @@ import * as BABYLON from 'babylonjs';
 import { Room } from "./room";
 import { Orientation } from "./wallOrientation";
 import { Texture } from 'babylonjs';
+import { Coin } from './coin';
 
 //decalrations
 declare function require(name: string);
@@ -75,14 +76,13 @@ export class LandingRoom extends Room {
     // const landingWallMaterial = this.createMaterial(require("./images/night_sky.jpg"));
 
 
-    const starfieldWallMaterial = new _BABYLON.StarfieldProceduralTexture("texture", 512, scene);
-    starfieldWallMaterial.zoom = 20;
+    const starfieldWallMaterial = new _BABYLON.StarfieldProceduralTexture("texture", 256, scene);
+    starfieldWallMaterial.zoom = 5;
     starfieldWallMaterial.uScale = 1 / 10;
     starfieldWallMaterial.vScale = 1 / 10;
     starfieldWallMaterial.distfading = 0.5;
     starfieldWallMaterial.beta = 1;
     starfieldWallMaterial.saturation = 0.3;
-    // debugger;
 
     const landingWallMaterial = this.createDefaultMaterial(starfieldWallMaterial);
 
@@ -97,9 +97,9 @@ export class LandingRoom extends Room {
     const floorTexture = ((floor.material as BABYLON.StandardMaterial).diffuseTexture as Texture);
     floorTexture.vScale = 10;
 
-    const grassTexture = new _BABYLON.GrassProceduralTexture("texture", 512, scene);;
+    const grassTexture = new _BABYLON.GrassProceduralTexture("texture", 256, scene);;
     grassTexture.uScale = landingWidth / 8;
-    grassTexture.vScale = landingLength / 4;
+    grassTexture.vScale = landingLength / 8;
     (grassTexture.grassColors as BABYLON.Color3[]) = [
       new BABYLON.Color3(60 / 255, 36 / 255, 0 / 255),
       new BABYLON.Color3(80 / 255, 22 / 255, 0 / 255),
@@ -115,19 +115,24 @@ export class LandingRoom extends Room {
     ceiling.position.z = (landingLength + highFloorGap) / 2;
     ceiling.position.y = 3 * landingWallParams.wallHeight;
 
-    // const ceilingMaterial = ((ceiling.material as BABYLON.StandardMaterial).diffuseTexture as Texture);
-    // ceilingMaterial.uScale = landingWidth / 2 / 2;
-    // ceilingMaterial.vScale = landingLength / 6;
-
-    const ceilingTexture = new _BABYLON.StarfieldProceduralTexture("texture", 512, scene);
-    ceilingTexture.zoom = 20;
-    // ceilingTexture.uScale = 1 / 10;
+    const ceilingTexture = new _BABYLON.StarfieldProceduralTexture("texture", 128, scene);
+    ceilingTexture.zoom = 1;
     ceilingTexture.vScale = 3;
     ceilingTexture.distfading = 0.5;
     ceilingTexture.beta = 1;
     ceilingTexture.saturation = 0.3;
 
     ceiling.material = this.createDefaultMaterial(ceilingTexture);
+
+    this.addCoin(0, 0.5, 14);
+    this.addCoin(0, 0.5, 18);
+    this.addCoin(0, 0.5, 22);
+    this.addCoin(0, 0.5, 26);
+    this.addCoin(0, 0.5, 30);
+    this.addCoin(0, 0.5, 34);
+    this.addCoin(0, 0.5, 38);
+    this.addCoin(0, 0.5, 42);
+    this.addCoin(0, 0.5, 46);
   }
 
   static createTrigerVolume = (): BABYLON.Mesh => {
