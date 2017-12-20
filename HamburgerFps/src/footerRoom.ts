@@ -3,6 +3,7 @@ import * as BABYLON from 'babylonjs';
 import { Room } from "./room";
 import { Orientation } from "./wallOrientation";
 import { Texture } from 'babylonjs';
+import { IWallParams } from './iWallParams';
 
 //decalrations
 declare function require(name: string);
@@ -18,9 +19,10 @@ export class FooterRoom extends Room {
         const gap = this.gap;
 
         //ROOM START
-        const footerWallParams = {
+        const footerWallParams: IWallParams = {
             wallHeight: 2 * wallHeight,
-            wallThickness: wallThickness
+            wallThickness: wallThickness,
+            closed: false
         }
 
         const footerRoom = this.createWallMesh(
@@ -94,10 +96,34 @@ export class FooterRoom extends Room {
         const coinY = 0.5 - 3.5;
 
         for (let coinX = -7; coinX < -2; coinX += 3)
-            for (let coinZ = 0; coinZ < 36; coinZ += 4)
+            for (let coinZ = 2; coinZ < 38; coinZ += 4)
                 this.addCoin(coinX, coinY, coinZ);
 
 
+                this.addCoin(-13, coinY, 32);
+                this.addCoin(-13, coinY, 34);
+                this.addCoin(-13, coinY, 36);
+                this.addCoin(-13, coinY, 38);
+
+        const ghostY = -1.5;
+
+        const ghost1Track: BABYLON.Vector3[] = [
+            new BABYLON.Vector3(-7, ghostY, 2),
+            new BABYLON.Vector3(-4, ghostY, 2),
+            new BABYLON.Vector3(-4, ghostY, 38),
+            new BABYLON.Vector3(-4, ghostY, 2),
+            new BABYLON.Vector3(-7, ghostY, 38),
+        ]
+
+        const ghost2Track: BABYLON.Vector3[] = [
+            new BABYLON.Vector3(-12, ghostY, 36),
+            new BABYLON.Vector3(-12, ghostY, 34),
+        ]
+
+        const ghost2Rotation = new BABYLON.Vector3(0, -Math.PI/2, 0);
+
+        this.addGhost(ghost1Track, 0.15);
+        this.addGhost(ghost2Track, 0.05, ghost2Rotation);
     }
 
     static createTrigerVolume = (): BABYLON.Mesh => {

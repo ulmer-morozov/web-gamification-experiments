@@ -169,7 +169,7 @@ export class AboutRoom extends Room {
     const defaultSamplePositionY = 1;
 
     const goldSample = this.createResourceSample();
-    goldSample.material = this.createMaterial(require('./images/gold.jpg'));
+    goldSample.material = this.createMaterial(require('./images/gold2.jpg'));
     goldSample.position.set(4, defaultSamplePositionY, 7);
 
     const woodTexture = new _BABYLON.WoodProceduralTexture("texture", 256, scene);
@@ -192,8 +192,7 @@ export class AboutRoom extends Room {
 
     const earthSample = this.createResourceSample();
     earthSample.position.set(-8, defaultSamplePositionY, 7);
-    earthSample.material = this.createDefaultMaterial(earthTexture);
-
+    earthSample.material = this.createDefaultMaterial(earthTexture);  
   }
 
   createResourceSample = (): BABYLON.Mesh => {

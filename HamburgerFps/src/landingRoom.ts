@@ -4,6 +4,7 @@ import { Room } from "./room";
 import { Orientation } from "./wallOrientation";
 import { Texture } from 'babylonjs';
 import { Coin } from './coin';
+import { IWallParams } from './iWallParams';
 
 //decalrations
 declare function require(name: string);
@@ -23,9 +24,10 @@ export class LandingRoom extends Room {
     const landingLength = 50;
     const landingWidth = 20;
 
-    const landingWallParams = {
+    const landingWallParams: IWallParams = {
       wallHeight: wallHeight,
-      wallThickness: wallThickness
+      wallThickness: wallThickness,
+      closed: false
     }
 
     const highFloorGap = 10;
@@ -70,11 +72,6 @@ export class LandingRoom extends Room {
     );
     landingThirdWallMesh.position.y = 2 * landingWallParams.wallHeight;
     landingThirdWallMesh.checkCollisions = false;
-
-
-
-    // const landingWallMaterial = this.createMaterial(require("./images/night_sky.jpg"));
-
 
     const starfieldWallMaterial = new _BABYLON.StarfieldProceduralTexture("texture", 256, scene);
     starfieldWallMaterial.zoom = 5;

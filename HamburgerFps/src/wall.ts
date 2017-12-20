@@ -1,5 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import { Orientation } from './wallOrientation';
+import { IWallParams } from './iWallParams';
 
 const elementsForOnePosition = 3;// (x, y, z)
 
@@ -30,15 +31,14 @@ export class Wall {
             this.corners = this.corners.reverse();
     }
 
-    createMesh = (params: { wallHeight: number, wallThickness: number }): BABYLON.Mesh => {
-
+    createMesh = (params: IWallParams): BABYLON.Mesh => {
         this.corners = this.corners.reverse();
         const wallHeight = params.wallHeight;
         const wallThickness = params.wallThickness;
 
         const trianglesInOneWallPlate = 2;
-        let closed = false;
 
+        const closed = params.closed;
         const wallPlateCount = closed ? this.corners.length : this.corners.length - 1;
 
         const bottomInnerPositions: number[] = [];

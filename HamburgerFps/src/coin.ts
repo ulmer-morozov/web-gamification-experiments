@@ -17,9 +17,9 @@ export class Coin extends Collectable {
         if (Coin._material != undefined)
             return Coin._material;
 
-        const texture = new BABYLON.Texture(require('./images/gold.jpg'), undefined);
-        texture.uScale = 1 / 4;
-        texture.vScale = 1 / 4;
+        const texture = new BABYLON.Texture(require('./images/gold2.jpg'), undefined);
+        // texture.uScale = 1 / 4;
+        // texture.vScale = 1 / 4;
         // texture.uOffset = params.uOffset | 0;
         // texture.vOffset = params.vOffset | 0;
 
@@ -45,10 +45,7 @@ export class Coin extends Collectable {
         colliderMesh.rotation.z = Math.PI / 2;
         colliderMesh.parent = this;
         colliderMesh.material = Coin.getMaterial();
-
-        // colliderMesh.registerBeforeRender(() => {
-
-        // });
+        // colliderMesh.showBoundingBox = true;
 
         return colliderMesh;
     }

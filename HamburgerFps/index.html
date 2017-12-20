@@ -21,10 +21,10 @@
 
     .site-body {
       position: fixed;
-      width: 30%;
-      height: 100%;
-      top: 0;
+      width: 400pt;
       right: 0;
+      top: 0;
+      bottom: 0;
     }
 
     .page {
@@ -44,8 +44,10 @@
 
     #game-view {
       position: fixed;
-      width: 70%;
-      height: 100%;
+      left: 0;
+      top: 0;
+      right: 400pt;
+      bottom: 0;
     }
 
     #fpsLabel {
@@ -65,6 +67,86 @@
       cursor: default;
       font-family: 'Bungee', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
+
+    @keyframes pulse_animation {
+      0% {
+        transform: scale(1);
+      }
+      30% {
+        transform: scale(1);
+      }
+      40% {
+        transform: scale(1.08);
+      }
+      50% {
+        transform: scale(1);
+      }
+      60% {
+        transform: scale(1);
+      }
+      70% {
+        transform: scale(1.05);
+      }
+      80% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .pulse {
+      animation-name: pulse_animation;
+      animation-duration: 1000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    #gameover {
+      position: absolute;
+      pointer-events: none;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      text-align: center;
+      font-family: 'Bungee', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .gameover-info {
+      position: absolute;
+      left: 0;
+      top: 40%;
+      right: 0;
+      bottom: 0;
+    }
+
+    .gameover-title {
+      font-size: 50pt;
+    }
+
+    .gameover-text {
+      font-size: 25pt;
+    }
+
+    .gameover-post-text {
+      margin-top: 50pt;
+      font-size: 25pt;
+      color: white;
+    }
+
+
+    .gameover-bg {
+      position: absolute;
+      background-color: crimson;
+      opacity: 0.7;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+    }
   </style>
 
 </head>
@@ -72,8 +154,19 @@
 <body>
   <div id="fpsLabel"></div>
 
+
+
   <div id="game-view">
+    <div id="gameover">
+      <div class="gameover-bg"></div>
+      <div class="gameover-info">
+        <div class="gameover-title">Game over</div>
+        <div id="gameover-text" class="gameover-text"></div>
+        <div class="gameover-post-text pulse">press any key</div>
+      </div>
+    </div>
     <div id="score"></div>
+
     <canvas id="glCanvas">
       Your browser doesn't appear to support the
       <code>&lt;canvas&gt;</code> element.
@@ -85,7 +178,8 @@
     <div id="home-room" class="page hidden">
       <h1>Домащнаяя страница</h1>
       <p>Добро пожаловать на наш сайт!</p>
-      <p>Дом — символ уюта здесь хорошо и спокойно. Временами щебечет реклама и стучит онлайн-консультант. Время расслабиться и получать удовольствие.</p>
+      <p>Дом — символ уюта здесь хорошо и спокойно. Временами щебечет реклама и стучит онлайн-консультант. Время расслабиться
+        и получать удовольствие.</p>
       <p>Также дом символизирует
         <i>начало</i>, ведь именно здесь начинается твое незабываемое путешествие по интернет страницам.</p>
     </div>
@@ -100,26 +194,35 @@
     <div id="about-room" class="page hidden">
       <h1>О компании</h1>
       <p>Пожалуй один из самых древних и самых загадочных разделов сайта.</p>
-      <p>Ходят слухи, что главная задача этого раздела — зародить в голове посетителя понимание того, что каждый сотрудник компании профессионал своего дела.</p>
+      <p>Ходят слухи, что главная задача этого раздела — зародить в голове посетителя понимание того, что каждый сотрудник компании
+        профессионал своего дела.</p>
       <p>А сама компания один из лидеров рынка, и, что она оказывает наиболее полный спектр качественных услуг на любой вкус.</p>
-      <p>Важно отметить, что на этой странице зачастую указывается информация о плодовитости сотрудников, их семейное положение и информация о домашних животных.</p>
+      <p>Важно отметить, что на этой странице зачастую указывается информация о плодовитости сотрудников, их семейное положение
+        и информация о домашних животных.</p>
     </div>
     <div id="news-room" class="page hidden">
       <h1>Новости</h1>
       <p>В данном разделе ты сможешь найти самую свежую и интересную информацию о жизни компании.</p>
       <p>Наиболее часто освещаются следующие темы:</p>
       <ul>
-          <li>Мы открылись!</li>
-          <li>Мы переехали!</li>
-          <li>Мы обновили сайт!</li>
-          <li>Ведутся работы!</li>
-        </ul>
+        <li>Мы открылись!</li>
+        <li>Мы переехали!</li>
+        <li>Мы обновили сайт!</li>
+        <li>Ведутся работы!</li>
+      </ul>
     </div>
     <div id="footer-room" class="page hidden">
       <h1>Подвал</h1>
       <p>Он же футор,
         <br/> Дом — символ уюта, именно здесь начинается твое незабываемое путешествие по страницам нашего сайта.</p>
     </div>
+
+    <div id="404-room" class="page hidden">
+      <h1>404 Ошибка</h1>
+      <p>Поздравляем!
+        <br/> Вы поймали редкого зверя. Раньше здесь была страница, а сейчас её нет, вернее она есть, но она не та, что была раньше.</p>
+    </div>
+  </div>
   </div>
 
   <script src="bundle.js"></script>

@@ -2,15 +2,21 @@ import { Wall } from "./wall";
 import { Orientation } from "./wallOrientation";
 import { Collectable } from "./collectable";
 import { Coin } from "./coin";
+import { IWallParams } from "./iWallParams";
+import { Ghost } from "./ghost";
+
+//decalrations
+declare function require(name: string);
 
 export class Room extends BABYLON.Mesh {
     wallHeight = 3.5;
     wallThickness = this.wallHeight / 5;
     gap = 0.001;
 
-    defaultWallParams = {
+    defaultWallParams: IWallParams = {
         wallHeight: this.wallHeight,
-        wallThickness: this.wallThickness
+        wallThickness: this.wallThickness,
+        closed: false
     };
 
     public priority: number = 0;
@@ -21,11 +27,9 @@ export class Room extends BABYLON.Mesh {
 
         this.collectables = [];
 
-        // scene.addMesh(trigerVolume);
         if (this.trigerVolume) {
             this.trigerVolume.parent = this;
             this.trigerVolume.isVisible = false;
-            // (this.trigerVolume.material as BABYLON.StandardMaterial).disableLighting = true;
 
         }
     }
@@ -49,13 +53,16 @@ export class Room extends BABYLON.Mesh {
         return material;
     }
 
-    createWallMesh = (cornerData: number[], orientation: Orientation = Orientation.Left, wallParams): BABYLON.Mesh => {
+    createWallMesh = (cornerData: number[], orientation: Orientation = Orientation.Left, wallParams: IWallParams, physicsEnabled = true): BABYLON.Mesh => {
         const wall = new Wall(cornerData, orientation);
 
         const wallMesh = wall.createMesh(wallParams);
 
-        wallMesh.physicsImpostor = new BABYLON.PhysicsImpostor(wallMesh, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 0, restitution: 0.3 });
-        wallMesh.checkCollisions = true;
+        if (physicsEnabled) {
+            wallMesh.physicsImpostor = new BABYLON.PhysicsImpostor(wallMesh, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 0, restitution: 0.3 });
+            wallMesh.checkCollisions = true;
+        }
+
         wallMesh.parent = this;
 
         return wallMesh;
@@ -112,6 +119,16 @@ export class Room extends BABYLON.Mesh {
         material.backFaceCulling = true;
         material.disableLighting = true;
         material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+
+        return material;
+    }
+
+    createDefaultMaterialWithColor = (color: BABYLON.Color3): BABYLON.StandardMaterial => {
+        const material = new BABYLON.StandardMaterial("ceilingMaterial", this.scene);
+
+        material.backFaceCulling = true;
+        material.disableLighting = true;
+        material.emissiveColor = color;
 
         return material;
     }
@@ -173,5 +190,12 @@ export class Room extends BABYLON.Mesh {
         const coin = new Coin();
         coin.position.set(x, y, z);
         this.registerCollectable(coin);
+    }
+
+    addGhost = (track: BABYLON.Vector3[], speed: number, initialRotation: BABYLON.Vector3 = BABYLON.Vector3.Zero()): Ghost => {
+        const ghost = new Ghost(2, this.scene, track, speed, initialRotation);
+        this.registerCollectable(ghost);
+
+        return ghost;
     }
 }

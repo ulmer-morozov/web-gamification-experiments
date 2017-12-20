@@ -13,5 +13,12 @@ export class Player {
             this.onScoreChanged(this.score);
     }
 
+    kill = (reason: string): void => {
+
+        if (this.onKilled != undefined)
+            this.onKilled(reason);
+    }
+
     onScoreChanged: (newScore: number) => void;
+    onKilled: (reason: string) => void;
 }

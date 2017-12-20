@@ -3,6 +3,7 @@ import * as BABYLON from 'babylonjs';
 import { Room } from "./room";
 import { Orientation } from "./wallOrientation";
 import { Texture, Color3 } from 'babylonjs';
+import { IWallParams } from './iWallParams';
 
 //decalrations
 declare function require(name: string);
@@ -15,9 +16,10 @@ export class NewsRoom extends Room {
         const gap = this.gap;
 
         //ROOM START
-        const newsRoomWallParams = {
+        const newsRoomWallParams: IWallParams = {
             wallHeight: 4 * this.defaultWallParams.wallHeight,
-            wallThickness: this.defaultWallParams.wallThickness
+            wallThickness: this.defaultWallParams.wallThickness,
+            closed: false
         }
         const size = 24.0;
         const newsRoomWallMesh = this.createWallMesh(
