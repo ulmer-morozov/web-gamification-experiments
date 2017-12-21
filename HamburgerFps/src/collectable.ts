@@ -32,11 +32,8 @@ export abstract class Collectable extends BABYLON.Mesh {
 
         this.isCollected = true;
 
-        // debugger;
         this.collisionVector = this.colliderMesh.getAbsolutePosition().subtract(player.collider.getAbsolutePosition());
         this.collisionVector.normalize();
-
-        console.log("colelcted");
 
         if (this.onCollect != undefined)
             this.onCollect(player);
