@@ -149,6 +149,8 @@ export class NotFoundRoom extends Room {
 
         this.addCoin(-6, coinY, 7);
         this.addCoin(-6, coinY, 4);
+
+        this.addCross(-5, 1.5, 5.5);
     }
 
     static createTrigerVolume = (): BABYLON.Mesh => {

@@ -30,7 +30,7 @@ export class Room extends BABYLON.Mesh {
 
         if (this.trigerVolume) {
             this.trigerVolume.parent = this;
-            this.trigerVolume.isVisible = false;
+            // this.trigerVolume.isVisible = false;
         }
     }
 

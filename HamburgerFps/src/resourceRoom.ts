@@ -24,7 +24,6 @@ export class ResourceRoom extends Room {
         const gap = this.gap;
 
 
-        const coinY = 0.5;
         // this.addCoin(-2, coinY, 7);
 
 
@@ -60,6 +59,10 @@ export class ResourceRoom extends Room {
         earthSample.position.set(defaultSamplePositionX, defaultSamplePositionY, defaultSamplePositionZ);
         earthSample.material = this.createDefaultMaterial(earthTexture);
 
+        const coinY = 0.5;
+
+        this.addCoin(-18, coinY, 5.8);
+        this.addCoin(-18, coinY, 7.2);
     }
 
     createResourceSample = (): BABYLON.Mesh => {

@@ -164,11 +164,11 @@ export class AboutRoom extends Room {
     const roofParams = {
       height: 5,
       width: 38,
-      depth: 15
+      depth: 6.5
     };
 
     const mesh = BABYLON.MeshBuilder.CreateBox("roof", roofParams);
-    mesh.position.set(-4, roofParams.height / 2, roofParams.depth / 2 - 10);
+    mesh.position.set(-4, roofParams.height / 2, roofParams.depth / 2);
     // mesh.setEnabled(false);
     // mesh.isVisible = false;
     return mesh;

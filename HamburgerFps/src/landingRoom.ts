@@ -131,8 +131,7 @@ export class LandingRoom extends Room {
     this.addCoin(0, 0.5, 42);
     this.addCoin(0, 0.5, 46);
 
-    this.addCross(0, 1.5, 12);
-    this.addCross(-5, 1.5, 12);
+    this.addCross(7.5, 1.5, 4);
   }
 
   static createTrigerVolume = (): BABYLON.Mesh => {
