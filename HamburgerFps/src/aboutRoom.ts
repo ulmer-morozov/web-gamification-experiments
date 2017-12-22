@@ -153,11 +153,29 @@ export class AboutRoom extends Room {
     ceilingTexture.uScale = roomWidth / 4;
     ceilingTexture.vScale = roomHeight / 4;
 
-    const ceoPainting = this.addPainting(require("./images/ceo_painting.png"), 2, 1.7);
-    ceoPainting.position.y = 2.0;
+    const paintingY = 2.0;
+
+    const ceoPainting = this.addPainting(require("./images/ceo_painting.jpg"), 2, 1.4);
+    ceoPainting.position.y = paintingY;
     ceoPainting.position.z = 5 - gap;
 
+    const dogPainting = this.addPainting(require("./images/dog.jpg"), 2, 1.4);
+    dogPainting.position.x = -2.5;
+    dogPainting.position.y = paintingY;
+    dogPainting.position.z = 5 - gap;
 
+    const familyPainting = this.addPainting(require("./images/family.jpg"), 2, 1.4);
+    familyPainting.position.x = 2.5;
+    familyPainting.position.y = paintingY;
+    familyPainting.position.z = 5 - gap;
+
+    const torchY = 2.3;
+    const torchZ = 4.86;
+
+    this.addTorch(-3.75, torchY, torchZ);
+    this.addTorch(-1.25, torchY, torchZ);
+    this.addTorch(+1.25, torchY, torchZ);
+    this.addTorch(+3.75, torchY, torchZ);
   }
 
   static createTrigerVolume = (): BABYLON.Mesh => {

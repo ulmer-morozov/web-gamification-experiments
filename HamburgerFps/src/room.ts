@@ -8,6 +8,7 @@ import { Cross } from "./cross";
 
 //decalrations
 declare function require(name: string);
+const _BABYLON = require('babylonjs/dist/preview release/proceduralTexturesLibrary/babylonjs.proceduralTextures')
 
 export class Room extends BABYLON.Mesh {
     wallHeight = 3.5;
@@ -30,7 +31,7 @@ export class Room extends BABYLON.Mesh {
 
         if (this.trigerVolume) {
             this.trigerVolume.parent = this;
-            // this.trigerVolume.isVisible = false;
+            this.trigerVolume.isVisible = false;
         }
     }
 
@@ -134,13 +135,14 @@ export class Room extends BABYLON.Mesh {
     }
 
     addPainting = (imageUrl: string, paintingWidth: number, paintingHeight: number): BABYLON.Mesh => {
-        const materialPlane = new BABYLON.StandardMaterial("PaintingMaterial", this.scene);
+        const materialPlane = new BABYLON.StandardMaterial("PaintingMaterial2", this.scene);
 
         materialPlane.diffuseTexture = new BABYLON.Texture(imageUrl, this.scene);
         materialPlane.emissiveColor = new BABYLON.Color3(1, 1, 1);
         materialPlane.backFaceCulling = true;
         materialPlane.disableLighting = true;
-        materialPlane.diffuseTexture.hasAlpha = true;
+        materialPlane.diffuseTexture.hasAlpha = false;
+        materialPlane.diffuseTexture.anisotropicFilteringLevel = 0;
 
         const options = {
             width: paintingWidth,
@@ -205,5 +207,42 @@ export class Room extends BABYLON.Mesh {
 
         this.registerCollectable(cross);
         return cross;
+    }
+
+    addTorch = (x: number, y: number, z: number): void => {
+        const fireTexture: BABYLON.Texture = new _BABYLON.FireProceduralTexture("texture", 32, this.scene);
+        // fireTexture.ampScale = 500.0;
+
+        const cubeSideSize = 0.25;
+        const torchHeight = 0.75;
+
+        const woodTexture: BABYLON.Texture = new _BABYLON.WoodProceduralTexture("texture", 64, this.scene);
+        // (woodTexture as any).ampScale = 200.0;
+        // woodTexture.uScale = 1/10;
+        woodTexture.vScale = 3;
+
+        const stickParams = {
+            height: torchHeight,
+            width: cubeSideSize * 1 / 2,
+            depth: cubeSideSize * 1 / 2
+        };
+
+        const stickMesh = BABYLON.MeshBuilder.CreateBox("stickMesh", stickParams, this.scene);
+        stickMesh.parent = this;
+        stickMesh.position.set(x, y + torchHeight / 2, z);
+        stickMesh.rotation.x = -Math.PI / 12;
+        stickMesh.material = this.createDefaultMaterial(woodTexture);
+
+        const fireParams = {
+            height: 2 * cubeSideSize,
+            width: cubeSideSize,
+            depth: cubeSideSize
+        };
+
+        const fireMesh = BABYLON.MeshBuilder.CreateBox("fireMesh", fireParams, this.scene);
+        fireMesh.parent = stickMesh;
+        fireMesh.position.set(0, torchHeight / 2 + cubeSideSize / 2 + this.gap, 0);
+        fireMesh.material = this.createDefaultMaterial(fireTexture);
+        // fireMesh.material.alpha = 0.7;
     }
 }

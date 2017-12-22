@@ -87,12 +87,20 @@ export class LandingRoom extends Room {
     landingSecondWallMesh.material = landingWallMaterial;
     landingThirdWallMesh.material = landingWallMaterial;
 
-    const floor = this.createFloor(3, landingLength, require("./images/asphalt.jpg"));
-    floor.position.z = landingLength / 2;
-    floor.position.y = - gap;
-    floor.checkCollisions = false;
-    const floorTexture = ((floor.material as BABYLON.StandardMaterial).diffuseTexture as Texture);
-    floorTexture.vScale = 10;
+    const road = this.createFloor(3, landingLength, require("./images/asphalt.jpg"));
+    road.position.z = landingLength / 2;
+    road.position.y = - gap;
+    road.checkCollisions = false;
+
+    // const roadTexture = new _BABYLON.RoadProceduralTexture("roadTexture", 4096, scene);;
+    // roadTexture.uScale = landingWidth / 8;
+    // roadTexture.vScale = landingLength / 8;
+    // roadTexture.roadColor=new BABYLON.Color3(1,1,1);
+    // road.material = this.createDefaultMaterial(roadTexture);
+
+    const floorTexture = ((road.material as BABYLON.StandardMaterial).diffuseTexture as Texture);
+    floorTexture.uScale = 1;
+    floorTexture.vScale = 15;
 
     const grassTexture = new _BABYLON.GrassProceduralTexture("texture", 256, scene);;
     grassTexture.uScale = landingWidth / 8;
@@ -103,7 +111,7 @@ export class LandingRoom extends Room {
       new BABYLON.Color3(64 / 255, 93 / 255, 52 / 255),
     ];
 
-    const grass = this.createFloor(landingWidth, landingLength);//, require("./images/ground.jpg")
+    const grass = this.createFloor(landingWidth, landingLength);
     grass.position.z = landingLength / 2;
     grass.position.y = -2 * gap;
     grass.material = this.createDefaultMaterial(grassTexture);
