@@ -98,14 +98,13 @@ export class Game {
     }
 
     restart = () => {
-        const spawnPoint = new BABYLON.Vector3(-20.690283688679465, 1.6049999998807911, 54.01300318944455);
+        const spawnPoint = new BABYLON.Vector3(0, 1.6, 0);
         this.playerCamera.position.copyFrom(spawnPoint);
         this.playerCamera.rotation.set(0, 0, 0);
         this.playerCamera.speed = this.defaultCameraSpeed;
 
         this.player.reset();
         this.player.collider.computeWorldMatrix(true);
-
 
         //reset all collectables
         for (let i = 0; i < this.rooms.length; i++) {

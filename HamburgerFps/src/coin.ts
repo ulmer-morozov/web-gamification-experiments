@@ -5,7 +5,6 @@ import { Player } from "./player";
 declare function require(name: string);
 
 export class Coin extends Collectable {
-
     constructor(private readonly size: number = 1) {
         super();
         this.init();
@@ -48,7 +47,9 @@ export class Coin extends Collectable {
         // colliderMesh.showBoundingBox = true;
 
         return colliderMesh;
+
     }
+    protected CanCollect = (player: Player): boolean => true;
 
     onCollect = (player: Player): void => {
         player.addScore(100);

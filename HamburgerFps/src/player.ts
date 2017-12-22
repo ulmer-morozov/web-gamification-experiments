@@ -1,7 +1,11 @@
+import { Inventory } from "./inventory";
+
 export class Player {
     public score: number;
     public collider: BABYLON.Mesh;
     public isKilled: boolean;
+
+    public inventory: Inventory;
 
     static SCORE_CHANGE = "SCORE_CHANGE";
     static ON_KILL = "ON_KILL";
@@ -16,7 +20,7 @@ export class Player {
 
     setScore = (newScore: number): void => {
         this.score = newScore;
-        
+
         const eventData = {
             score: this.score
         }
@@ -41,5 +45,6 @@ export class Player {
     reset = (): void => {
         this.setScore(0);
         this.isKilled = false;
+        this.inventory = new Inventory();
     }
 }

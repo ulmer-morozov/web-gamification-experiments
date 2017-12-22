@@ -2,16 +2,11 @@ import * as BABYLON from 'babylonjs';
 
 import { Room } from "./room";
 import { Orientation } from "./wallOrientation";
-import { Texture, Color3 } from 'babylonjs';
 
 //decalrations
 declare function require(name: string);
-
 const _BABYLON = require('babylonjs/dist/preview release/proceduralTexturesLibrary/babylonjs.proceduralTextures')
 
-// import * as sad from 'babylonjs/dist/preview release/materialsLibrary/babylonjs-materials'
-
-// debugger;
 export class HomeRoom extends Room {
     constructor(scene: BABYLON.Scene) {
         super(scene, "home-room", HomeRoom.createTrigerVolume());
@@ -54,7 +49,7 @@ export class HomeRoom extends Room {
         floor.material = this.createDefaultMaterial(woodTexture);
 
         const darkWoodTexture = new _BABYLON.WoodProceduralTexture("texture", 256, scene);
-        darkWoodTexture.woodColor = new Color3(17 / 255, 11 / 255, 5 / 255);
+        darkWoodTexture.woodColor = new BABYLON.Color3(17 / 255, 11 / 255, 5 / 255);
         darkWoodTexture.uScale = floorWidth;
         darkWoodTexture.vScale = floorHeight / 4;
         darkWoodTexture.ampScale = 200.0;

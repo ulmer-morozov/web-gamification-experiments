@@ -4,6 +4,7 @@ import { Collectable } from "./collectable";
 import { Coin } from "./coin";
 import { IWallParams } from "./iWallParams";
 import { Ghost } from "./ghost";
+import { Cross } from "./cross";
 
 //decalrations
 declare function require(name: string);
@@ -111,7 +112,7 @@ export class Room extends BABYLON.Mesh {
     }
 
     createDefaultMaterial = (texture: BABYLON.Texture): BABYLON.StandardMaterial => {
-        const material = new BABYLON.StandardMaterial("ceilingMaterial", this.scene);
+        const material = new BABYLON.StandardMaterial("texturedMaterial", this.scene);
 
         material.diffuseTexture = texture
         material.diffuseTexture.hasAlpha = false;
@@ -193,8 +194,16 @@ export class Room extends BABYLON.Mesh {
 
     addGhost = (track: BABYLON.Vector3[], speed: number, initialRotation: BABYLON.Vector3 = BABYLON.Vector3.Zero()): Ghost => {
         const ghost = new Ghost(2, this.scene, track, speed, initialRotation);
-        this.registerCollectable(ghost);
 
+        this.registerCollectable(ghost);
         return ghost;
+    }
+
+    addCross = (x: number, y: number, z: number): Cross => {
+        const cross = new Cross(this.scene);
+        cross.position.set(x, y, z);
+
+        this.registerCollectable(cross);
+        return cross;
     }
 }

@@ -14,6 +14,7 @@ export class Ghost extends Collectable {
     private pathIndex: number;
     private currentStep: number;
     private stepCount: number;
+    private evicted: boolean;
 
     constructor(
         private readonly size: number = 1.5,
@@ -25,6 +26,7 @@ export class Ghost extends Collectable {
         super();
         this.init();
 
+        this.evicted = false;
         this.pathIndex = 0;
         this.currentStep = 0;
         this.rotation.copyFrom(this.initialRotation);
@@ -90,7 +92,22 @@ export class Ghost extends Collectable {
         return mesh;
     }
 
+    protected CanCollect = (player: Player): boolean => true;
+
     onCollect = (player: Player): void => {
+        if (player.inventory.cross) {
+            this.evicted = true;
+            player.addScore(2500);
+
+            const cross = player.inventory.cross;
+
+            cross.isVisible = false;
+            cross.setEnabled(false);
+
+            player.inventory.cross = undefined;
+            return
+        }
+
         console.log("killed");
         player.kill("killed by ghost");
     }
@@ -104,16 +121,19 @@ export class Ghost extends Collectable {
             return;
         }
 
-        // this.scaling = this.scaling.scale(0.8);
+        if (!this.evicted)
+            return;
 
-        // const direction = new BABYLON.Vector3(this.collisionVector.x, 0.3, this.collisionVector.z);
-        // this.position.addInPlace(direction.scale(0.3));
+        this.scaling = this.scaling.scale(0.8);
 
-        // const minSize = 0.05;
-        // if (this.scaling.x < minSize) {
-        //     this.animationFinished = true;
-        //     this.onAnimationFinished();
-        // }
+        const direction = new BABYLON.Vector3(this.collisionVector.x, 0.3, this.collisionVector.z);
+        this.position.addInPlace(direction.scale(0.3));
+
+        const minSize = 0.05;
+        if (this.scaling.x < minSize) {
+            this.animationFinished = true;
+            this.onAnimationFinished();
+        }
     }
 
     updateMotionPoints = (): void => {
@@ -144,13 +164,20 @@ export class Ghost extends Collectable {
 
     onAnimationFinished = (): void => {
         // this.dispose();
+        this.setEnabled(false);
+        this.isVisible = false;
+        debugger
     }
 
     protected resetInternal = (): void => {
+        this.isVisible = true;
+        this.evicted = false;
         this.rotation.copyFrom(this.initialRotation);
         this.position.copyFrom(this.track[0]);
+        this.scaling.set(1, 1, 1);
         this.pathIndex = 0;
         this.currentStep = 0;
         this.updateMotionPoints();
+        this.setEnabled(true);
     }
 }

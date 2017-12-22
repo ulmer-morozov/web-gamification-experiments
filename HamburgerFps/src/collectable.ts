@@ -9,6 +9,8 @@ export abstract class Collectable extends BABYLON.Mesh {
     protected abstract onAnimationFinished: () => void;
     protected abstract resetInternal: () => void;
 
+    protected abstract CanCollect: (player: Player) => boolean;
+
     private colliderMesh: BABYLON.Mesh;
     public isCollected: boolean;
     public animationFinished: boolean;
@@ -32,6 +34,9 @@ export abstract class Collectable extends BABYLON.Mesh {
     tryCollect = (player: Player): boolean => {
         if (this.isCollected)
             return false;
+
+        if (!this.CanCollect(player))
+            return;
 
         const intersects = this.colliderMesh.intersectsMesh(player.collider);
         if (!intersects)
