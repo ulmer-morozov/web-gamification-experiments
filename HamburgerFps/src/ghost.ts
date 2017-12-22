@@ -28,6 +28,7 @@ export class Ghost extends Collectable {
         this.pathIndex = 0;
         this.currentStep = 0;
         this.rotation.copyFrom(this.initialRotation);
+        this.position.copyFrom(track[0]);
 
         this.updateMotionPoints();
     }
@@ -90,7 +91,7 @@ export class Ghost extends Collectable {
     }
 
     onCollect = (player: Player): void => {
-        // player.addScore(100);
+        console.log("killed");
         player.kill("killed by ghost");
     }
 
@@ -103,16 +104,16 @@ export class Ghost extends Collectable {
             return;
         }
 
-        this.scaling = this.scaling.scale(0.8);
+        // this.scaling = this.scaling.scale(0.8);
 
-        const direction = new BABYLON.Vector3(this.collisionVector.x, 0.3, this.collisionVector.z);
-        this.position.addInPlace(direction.scale(0.3));
+        // const direction = new BABYLON.Vector3(this.collisionVector.x, 0.3, this.collisionVector.z);
+        // this.position.addInPlace(direction.scale(0.3));
 
-        const minSize = 0.05;
-        if (this.scaling.x < minSize) {
-            this.animationFinished = true;
-            this.onAnimationFinished();
-        }
+        // const minSize = 0.05;
+        // if (this.scaling.x < minSize) {
+        //     this.animationFinished = true;
+        //     this.onAnimationFinished();
+        // }
     }
 
     updateMotionPoints = (): void => {
@@ -142,6 +143,14 @@ export class Ghost extends Collectable {
     }
 
     onAnimationFinished = (): void => {
-        this.dispose();
+        // this.dispose();
+    }
+
+    protected resetInternal = (): void => {
+        this.rotation.copyFrom(this.initialRotation);
+        this.position.copyFrom(this.track[0]);
+        this.pathIndex = 0;
+        this.currentStep = 0;
+        this.updateMotionPoints();
     }
 }

@@ -159,7 +159,7 @@ export class NotFoundRoom extends Room {
         };
 
         const mesh = BABYLON.MeshBuilder.CreateBox("boundBox", roofParams);
-        mesh.position.set(-roofParams.height / 2 - 2, 0, roofParams.depth / 2 );
+        mesh.position.set(-roofParams.height / 2 - 2, 0, roofParams.depth / 2 + 0.001);
         return mesh;
     }
 }

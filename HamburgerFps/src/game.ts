@@ -10,12 +10,15 @@ import { NotFoundRoom } from './notFoundRoom';
 import { Room } from "./room";
 import { IRoomChangeEvent } from "./iRoomChangeEvent";
 import { IRoomChangeEventData } from "./iRoomChangeEventData";
+import { ResourceRoom } from "./resourceRoom";
 
 export class Game {
     player: Player;
     playerCamera: BABYLON.FreeCamera;
     rooms: Room[];
     currentRoom: Room;
+
+    defaultCameraSpeed = 1.5;
 
     static ROOM_CHANGE = "ROOM_CHANGE";
 
@@ -34,7 +37,7 @@ export class Game {
         this.player = new Player(this.canvas);
 
         this.player.collider = BABYLON.MeshBuilder.CreateSphere("playerCollider", {
-            diameter: 2.5
+            diameter: 3
         }, null);
 
         this.player.collider.isVisible = false;
@@ -42,8 +45,7 @@ export class Game {
     }
 
     initPlayerCamera = (): void => {
-        const spawnPoint = new BABYLON.Vector3(-19.303563518995645, -0.33835735613668816, 73.15507997238659);
-        this.playerCamera = new BABYLON.FreeCamera("camera", spawnPoint, this.scene);
+        this.playerCamera = new BABYLON.FreeCamera("camera", BABYLON.Vector3.Zero(), this.scene);
 
         this.playerCamera.attachControl(this.canvas);
         this.playerCamera.ellipsoid = new BABYLON.Vector3(1.3, 0.8, 1.3);
@@ -56,7 +58,7 @@ export class Game {
         this.playerCamera.keysLeft = [65, 37]; // A
         this.playerCamera.keysRight = [68, 39]; // D
 
-        this.playerCamera.speed = 1.5;
+        this.playerCamera.speed = this.defaultCameraSpeed;
         this.playerCamera.inertia = 0.5;
         this.playerCamera.angularSensibility = 500;
 
@@ -81,14 +83,39 @@ export class Game {
         const notFoundRoom = new NotFoundRoom(this.scene);
         notFoundRoom.position.set(13, 0, 60);
 
+        const resourceRoom = new ResourceRoom(this.scene);
+        resourceRoom.position.set(4.5, 0, 51.9);
+
         this.rooms = [
             homeRoom,
             landingRoom,
             aboutRoom,
             footerRoom,
             newsRoom,
-            notFoundRoom
+            notFoundRoom,
+            resourceRoom
         ];
+    }
+
+    restart = () => {
+        const spawnPoint = new BABYLON.Vector3(-20.690283688679465, 1.6049999998807911, 54.01300318944455);
+        this.playerCamera.position.copyFrom(spawnPoint);
+        this.playerCamera.rotation.set(0, 0, 0);
+        this.playerCamera.speed = this.defaultCameraSpeed;
+
+        this.player.reset();
+        this.player.collider.computeWorldMatrix(true);
+
+
+        //reset all collectables
+        for (let i = 0; i < this.rooms.length; i++) {
+            const room = this.rooms[i];
+
+            for (let j = 0; j < room.collectables.length; j++) {
+                const collectable = room.collectables[j];
+                collectable.reset();
+            }
+        }
     }
 
     onKilled = (event: CustomEvent): void => {
@@ -104,6 +131,9 @@ export class Game {
             const collectable = this.currentRoom.collectables[i];
 
             collectable.tryCollect(this.player);
+            if (this.player.isKilled)
+                break;
+
             collectable.updateAnimation();
         }
     }

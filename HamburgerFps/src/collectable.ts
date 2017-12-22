@@ -5,17 +5,24 @@ export abstract class Collectable extends BABYLON.Mesh {
     abstract createCollider: () => BABYLON.Mesh;
     abstract updateAnimation: () => void;
 
-    abstract onCollect: (player: Player) => void;
-    abstract onAnimationFinished: () => void;
+    protected abstract onCollect: (player: Player) => void;
+    protected abstract onAnimationFinished: () => void;
+    protected abstract resetInternal: () => void;
 
     private colliderMesh: BABYLON.Mesh;
-    public isCollected = false;
-    public animationFinished = false;
+    public isCollected: boolean;
+    public animationFinished: boolean;
 
     protected collisionVector: BABYLON.Vector3;
+    protected positionBeforeCollected: BABYLON.Vector3;
+
 
     constructor() {
         super("collectable");
+        this.isCollected = false;
+        this.animationFinished = false;
+        this.collisionVector = undefined;
+        this.positionBeforeCollected = undefined;
     }
 
     init() {
@@ -31,6 +38,7 @@ export abstract class Collectable extends BABYLON.Mesh {
             return false;
 
         this.isCollected = true;
+        this.positionBeforeCollected = this.position.clone();
 
         this.collisionVector = this.colliderMesh.getAbsolutePosition().subtract(player.collider.getAbsolutePosition());
         this.collisionVector.normalize();
@@ -39,5 +47,15 @@ export abstract class Collectable extends BABYLON.Mesh {
             this.onCollect(player);
 
         return intersects;
+    }
+
+
+    reset = (): void => {
+        this.isCollected = false;
+        this.collisionVector = null;
+        this.animationFinished = false;
+
+        this.resetInternal();
+        this.positionBeforeCollected = undefined;
     }
 }

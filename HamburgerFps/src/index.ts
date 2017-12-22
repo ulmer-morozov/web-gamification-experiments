@@ -16,6 +16,7 @@ class Application {
 
   private gameOverElement: HTMLElement;
   private scoreElement: HTMLElement;
+  private needRestartGame: boolean;
 
   constructor() {
     this.initEngine();
@@ -27,6 +28,10 @@ class Application {
 
   time = 0;
   render = () => {
+    if (this.needRestartGame) {
+      this.game.restart();
+      this.needRestartGame = false;
+    }
     const shaderMaterial = this.scene.getMaterialByName("glitchShaderWallMaterial") as BABYLON.ShaderMaterial;
     shaderMaterial.setFloat("time", this.time);
     this.time += 0.02;
@@ -36,9 +41,7 @@ class Application {
   }
 
   run = (): void => {
-    //defaults
-    this.setScore(0);
-
+    this.needRestartGame = true;
     this.engine.runRenderLoop(this.render);
 
     //for test purpuse
@@ -84,8 +87,21 @@ class Application {
   }
 
   onKilled = (event: CustomEvent): void => {
-    document.getElementById("gameover-text").innerText = event.detail.reason;
-    this.gameOverElement.style.opacity = "1";
+    this.showGameover(event.detail.reason);
+
+    const somekeyDown = (): void => {
+      document.removeEventListener("keydown", somekeyDown, false);
+      this.hideGameover();
+      this.needRestartGame = true;
+    }
+
+    const keyListenerDelay = 1000;
+
+    const registerSomeKeyDownRestart = () => {
+      document.addEventListener("keydown", somekeyDown, false);
+    };
+
+    setTimeout(registerSomeKeyDownRestart, keyListenerDelay);
   }
 
   onScoreChange = (event: CustomEvent): void => {
@@ -100,6 +116,16 @@ class Application {
   hideRoom = (roomName: string): void => {
     JawQuery.addClass(roomName, "hidden");
   }
+
+  showGameover = (reason: string): void => {
+    this.gameOverElement.style.opacity = "1";
+    document.getElementById("gameover-text").innerText = reason;
+  }
+
+  hideGameover = (): void => {
+    this.gameOverElement.style.opacity = "0";
+  }
+
 
   setScore = (newScore: number): void => {
     this.scoreElement.innerText = `${newScore}`;

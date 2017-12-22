@@ -76,6 +76,20 @@ export class Coin extends Collectable {
     }
 
     onAnimationFinished = (): void => {
-        this.dispose();
+        // this.dispose();
+        this.setEnabled(false);
+        this.isVisible = false;
+    }
+
+    resetInternal = () => {
+        if (this.positionBeforeCollected != undefined) {
+            this.position.copyFrom(this.positionBeforeCollected);
+        }
+
+        this.rotation.set(0, 0, 0);
+        this.scaling.set(1, 1, 1);
+        this.isVisible = true;
+
+        this.setEnabled(true);
     }
 }
