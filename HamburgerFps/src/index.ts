@@ -57,7 +57,7 @@ class Application {
     // setInterval(() => {
     //   this.showMessage("ghost " + i);
     //   i++;
-    // }, 500);
+    // }, 1500);
   }
 
   animationendHandler = () => {

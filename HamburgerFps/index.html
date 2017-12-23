@@ -173,11 +173,11 @@
       0% {
         top: 40%;
         opacity: 0;
-        transform: scale3d(0.2, 0.2, 0.2) rotate3d(1, 0, 0, 120deg);
+        transform: scale3d(0.2, 0.2, 0.2) rotate3d(1, 0, 0, -100deg);
       }
       20% {
         opacity: 1;
-        transform: scale3d(1.2, 1.2, 1.2) rotate3d(1, 0, 0, 10deg);
+        transform: scale3d(1.2, 1.2, 1.2) rotate3d(1, 0, 0, 0deg);
       }
       30% {
         transform: scale3d(1, 1, 1) rotate3d(0, 0, 0, 0);
@@ -199,13 +199,20 @@
       left: 0;
       right: 0;
       top: 40%;
+      height: 200pt;
       opacity: 0;
-      perspective: 800px;
+      perspective: 200px;
+      -moz-perspective: 200px;
+      -webkit-perspective: 200px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform-style: preserve-3d;
       text-align: center;
       font-size: 60pt;
       color: white;
       font-family: 'Bungee', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       pointer-events: none;
+      z-index: 1000;
     }
 
     #message.active {

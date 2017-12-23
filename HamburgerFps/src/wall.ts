@@ -2,7 +2,7 @@ import * as BABYLON from 'babylonjs';
 import { Orientation } from './wallOrientation';
 import { IWallParams } from './iWallParams';
 
-const elementsForOnePosition = 3;// (x, y, z)
+const elementsForOnePosition = 3;
 
 export class Wall {
     public corners: BABYLON.Vector2[];
