@@ -93,6 +93,7 @@ export class Cross extends Collectable {
         this.rotation.y = -Math.PI / 6;
 
         this.parent = player.collider;
+        player.pullMessage("Blessed!");
     }
 
     updateAnimation = () => {

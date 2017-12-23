@@ -16,6 +16,7 @@ class Application {
 
   private gameOverElement: HTMLElement;
   private scoreElement: HTMLElement;
+  private messageElement: HTMLElement;
   private needRestartGame: boolean;
 
   constructor() {
@@ -49,6 +50,25 @@ class Application {
       const playerPosition = this.game.playerCamera.position;
       console.log(`position: {${playerPosition.x}, ${playerPosition.y}, ${playerPosition.z}}`);
     }
+
+
+
+    // var i = 1;
+    // setInterval(() => {
+    //   this.showMessage("ghost " + i);
+    //   i++;
+    // }, 3000);
+  }
+
+  showMessage = (text: string): void => {
+    const animationendHandler = () => {
+      JawQuery.removeClass(this.messageElement.id, "active");
+      this.messageElement.removeEventListener("animationend", animationendHandler, false);
+    }
+
+    this.messageElement.innerText = text;
+    this.messageElement.addEventListener("animationend", animationendHandler, false);
+    JawQuery.addClass(this.messageElement.id, "active");
   }
 
   initEngine = (): void => {
@@ -64,6 +84,7 @@ class Application {
   initUI = (): void => {
     this.scoreElement = document.getElementById("score");
     this.gameOverElement = document.getElementById("gameover");
+    this.messageElement = document.getElementById("message");
 
     const fpsLabel = document.getElementById("fpsLabel");
     fpsLabel.innerHTML = this.engine.getFps().toFixed() + " fps";
@@ -75,6 +96,7 @@ class Application {
 
   bindEvents = (): void => {
     this.canvas.addEventListener(Player.ON_KILL, this.onKilled);
+    this.canvas.addEventListener(Player.ON_MESSAGE, this.onMessageRecieved);
     this.canvas.addEventListener(Player.SCORE_CHANGE, this.onScoreChange);
     this.canvas.addEventListener(Game.ROOM_CHANGE, this.onRoomChange);
 
@@ -84,6 +106,10 @@ class Application {
   onRoomChange = (event: IRoomChangeEvent): void => {
     this.hideRoom(event.detail.oldRoomName);
     this.showRoom(event.detail.roomName);
+  }
+
+  onMessageRecieved = (event: CustomEvent): void => {
+    this.showMessage(event.detail.text);
   }
 
   onKilled = (event: CustomEvent): void => {

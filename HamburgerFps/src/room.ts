@@ -142,7 +142,6 @@ export class Room extends BABYLON.Mesh {
         materialPlane.backFaceCulling = true;
         materialPlane.disableLighting = true;
         materialPlane.diffuseTexture.hasAlpha = false;
-        materialPlane.diffuseTexture.anisotropicFilteringLevel = 0;
 
         const options = {
             width: paintingWidth,

@@ -18,9 +18,12 @@ export class Game {
     rooms: Room[];
     currentRoom: Room;
 
+    roomCount: { [id: string]: number; } = {};
+    achievements: { [id: string]: boolean; } = {};
     defaultCameraSpeed = 1.5;
 
     static ROOM_CHANGE = "ROOM_CHANGE";
+
 
     constructor(private canvas: HTMLCanvasElement, private scene: BABYLON.Scene) {
         this.initPlayerCamera();
@@ -98,7 +101,8 @@ export class Game {
     }
 
     restart = () => {
-        const spawnPoint = new BABYLON.Vector3(-0.04698217898566614, 1.6049999998807891, 44.871918614828786);
+        // const spawnPoint = new BABYLON.Vector3(-20.696222227582172, 1.2885017758859485, 62.88349483826127);
+        const spawnPoint = new BABYLON.Vector3(0, 1.6, 0);
         this.playerCamera.position.copyFrom(spawnPoint);
         this.playerCamera.rotation.set(0, 0, 0);
         this.playerCamera.speed = this.defaultCameraSpeed;
@@ -151,9 +155,36 @@ export class Game {
                 }
                 const roomChangedEvent: IRoomChangeEvent = new CustomEvent(Game.ROOM_CHANGE, { detail: eventData });
                 this.canvas.dispatchEvent(roomChangedEvent);
+
+                //all room research
+                if (this.achievements["explorer"] !== true) {
+                    if (this.roomCount[room.roomName] == undefined) {
+                        this.roomCount[room.roomName] = 0;
+                    }
+                    this.roomCount[room.roomName]++;
+
+                    let allRoomEntered = true;
+                    for (let i = 0; i < this.rooms.length; i++) {
+                        const room = this.rooms[i];
+                        if (this.roomCount[room.roomName] == undefined || this.roomCount[room.roomName] < 1) {
+                            allRoomEntered = false;
+                            break;
+                        }
+                    }
+
+                    if (allRoomEntered) {
+                        this.player.pullMessage("Explorer!");
+                        this.player.addScore(11);
+                        this.achievements["explorer"] = true;
+                    }
+                }
+
+
                 break;
             }
         }
+
+
     }
 
     playKillAnimation = (): void => {

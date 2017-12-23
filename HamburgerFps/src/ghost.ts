@@ -105,6 +105,7 @@ export class Ghost extends Collectable {
             cross.setEnabled(false);
 
             player.inventory.cross = undefined;
+            player.pullMessage("Ghostbuster!");
             return
         }
 

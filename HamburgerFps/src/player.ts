@@ -9,6 +9,7 @@ export class Player {
 
     static SCORE_CHANGE = "SCORE_CHANGE";
     static ON_KILL = "ON_KILL";
+    static ON_MESSAGE = "ON_MESSAGE";
 
     constructor(private canvas: HTMLCanvasElement) {
         this.reset();
@@ -46,5 +47,13 @@ export class Player {
         this.setScore(0);
         this.isKilled = false;
         this.inventory = new Inventory();
+    }
+
+    pullMessage = (text: string): void => {
+        const eventData = {
+            text: text
+        }
+        const newScoreEvent = new CustomEvent(Player.ON_MESSAGE, { detail: eventData });
+        this.canvas.dispatchEvent(newScoreEvent);
     }
 }
