@@ -58,9 +58,6 @@ export class Wall {
 
         let angle = Math.acos(BABYLON.Vector2.Dot(v1.normalize(), v2.normalize())) * 180 / Math.PI;
 
-        // debugger;
-
-
         const bottomOuterPositions: number[] = [];
         const topOuterPositions: number[] = [];
 

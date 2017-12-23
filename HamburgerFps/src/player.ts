@@ -28,6 +28,10 @@ export class Player {
 
         const newScoreEvent = new CustomEvent(Player.SCORE_CHANGE, { detail: eventData });
         this.canvas.dispatchEvent(newScoreEvent);
+
+        if (this.score === 9999) {
+            setInterval(() => this.pullMessage("You win!"), 1000)
+        }
     }
 
     kill = (reason: string): void => {

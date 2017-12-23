@@ -3,6 +3,7 @@
 <head>
   <title>Getting Started</title>
   <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Alegreya:400,900&amp;subset=cyrillic" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -28,14 +29,27 @@
     }
 
     .page {
-      padding: 30pt;
+      padding: 40pt;
       position: absolute;
       opacity: 1;
       transition: opacity 0.5s ease-in-out;
+      font-family: 'Alegreya', serif;
+      height: 100%;
     }
 
     .page.hidden {
       opacity: 0;
+      background-color: black;
+    }
+
+    .page h1 {
+      font-size: 40pt;
+      line-height: 42pt;
+      margin-top: 0;
+    }
+
+    .page p {
+      margin-right: 40pt;
     }
 
     .slider-fg:after {
@@ -269,7 +283,7 @@
     </div>
 
     <div id="404-room" class="page hidden">
-      <h1>404 Ошибка</h1>
+      <h1>Ошибка: 404</h1>
       <p>Поздравляем!
         <br/> Вы поймали редкого зверя. Раньше здесь была страница, а сейчас её нет, вернее она есть, но она не та, что была раньше.</p>
     </div>

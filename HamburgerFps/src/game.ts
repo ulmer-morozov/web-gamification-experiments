@@ -101,8 +101,8 @@ export class Game {
     }
 
     restart = () => {
-        // const spawnPoint = new BABYLON.Vector3(-20.696222227582172, 1.2885017758859485, 62.88349483826127);
-        const spawnPoint = new BABYLON.Vector3(0, 1.6, 0);
+        const spawnPoint = new BABYLON.Vector3(10.16858070697229, 1.604999999880791, 53.666230590517614);
+        // const spawnPoint = new BABYLON.Vector3(0, 1.6, 0);
         this.playerCamera.position.copyFrom(spawnPoint);
         this.playerCamera.rotation.set(0, 0, 0);
         this.playerCamera.speed = this.defaultCameraSpeed;

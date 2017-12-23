@@ -2,7 +2,7 @@ import * as BABYLON from 'babylonjs';
 
 import { Room } from "./room";
 import { Orientation } from "./wallOrientation";
-import { Texture } from 'babylonjs';
+import { Resource } from './resource';
 
 //decalrations
 declare function require(name: string);
@@ -12,72 +12,53 @@ export class ResourceRoom extends Room {
     constructor(scene: BABYLON.Scene) {
         super(scene, "resource-room", ResourceRoom.createTrigerVolume());
 
-        // aliases
-        const resourceRoomParams = {
-            wallHeight: this.wallHeight,
-            wallThickness: this.wallThickness,
-            closed: true
-        };
-
-        const wallThickness = resourceRoomParams.wallThickness;
-        const wallHeight = resourceRoomParams.wallHeight;
-        const gap = this.gap;
-
-
-        // this.addCoin(-2, coinY, 7);
-
-
-
         //добавим ресурсы
         const defaultSamplePositionX = -10;
         const defaultSamplePositionY = 1;
         const defaultSamplePositionZ = 0;
 
-        const goldSample = this.createResourceSample();
-        goldSample.material = this.createMaterial(require('./images/gold2.jpg'));
+        const goldTexture = new BABYLON.Texture(require('./images/gold2.jpg'), this.scene);
+
+        const goldSample = this.addResource("Gold", goldTexture);
         goldSample.position.set(defaultSamplePositionX + 12, defaultSamplePositionY, defaultSamplePositionZ);
 
         const woodTexture = new _BABYLON.WoodProceduralTexture("texture", 256, scene);
         // woodTexture.woodColor = new Color3(1, 0, 1);
         woodTexture.ampScale = 200.0;
 
-        const woodSample = this.createResourceSample();
+        const woodSample = this.addResource("Wood", woodTexture);
         woodSample.position.set(defaultSamplePositionX + 8, defaultSamplePositionY, defaultSamplePositionZ);
-        woodSample.material = this.createDefaultMaterial(woodTexture);
 
         const fireTexture = new _BABYLON.FireProceduralTexture("texture", 64, scene);
         fireTexture.ampScale = 200.0;
 
-        const fireSample = this.createResourceSample();
+        const fireSample = this.addResource("Fire", fireTexture);
         fireSample.position.set(defaultSamplePositionX + 4, defaultSamplePositionY, defaultSamplePositionZ);
-        fireSample.material = this.createDefaultMaterial(fireTexture);
 
-        const earthTexture = new _BABYLON.CloudProceduralTexture("texture", 64, scene);
-        earthTexture.ampScale = 200.0;
+        const airTexture = new _BABYLON.CloudProceduralTexture("texture", 64, scene);
+        airTexture.ampScale = 200.0;
 
-        const earthSample = this.createResourceSample();
-        earthSample.position.set(defaultSamplePositionX, defaultSamplePositionY, defaultSamplePositionZ);
-        earthSample.material = this.createDefaultMaterial(earthTexture);
+        const airSample = this.addResource("Air", airTexture);
+        airSample.position.set(defaultSamplePositionX, defaultSamplePositionY, defaultSamplePositionZ);
 
         const coinY = 0.5;
-
         this.addCoin(-18, coinY, 5.8);
         this.addCoin(-18, coinY, 7.2);
     }
 
-    createResourceSample = (): BABYLON.Mesh => {
-        const cubeSideSize = 1.5;
-        const cubeParams = {
-            height: cubeSideSize,
-            width: cubeSideSize,
-            depth: cubeSideSize
-        };
+    // createResourceSample = (): BABYLON.Mesh => {
+    //     const cubeSideSize = 1.5;
+    //     const cubeParams = {
+    //         height: cubeSideSize,
+    //         width: cubeSideSize,
+    //         depth: cubeSideSize
+    //     };
 
-        const resourceMesh = BABYLON.MeshBuilder.CreateBox("resource", cubeParams, this.scene);
-        resourceMesh.parent = this;
+    //     const resourceMesh = BABYLON.MeshBuilder.CreateBox("resource", cubeParams, this.scene);
+    //     resourceMesh.parent = this;
 
-        return resourceMesh;
-    }
+    //     return resourceMesh;
+    // }
 
     static createTrigerVolume = (): BABYLON.Mesh => {
         const roofParams = {

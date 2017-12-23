@@ -5,6 +5,7 @@ import { Coin } from "./coin";
 import { IWallParams } from "./iWallParams";
 import { Ghost } from "./ghost";
 import { Cross } from "./cross";
+import { Resource } from "./resource";
 
 //decalrations
 declare function require(name: string);
@@ -206,6 +207,14 @@ export class Room extends BABYLON.Mesh {
 
         this.registerCollectable(cross);
         return cross;
+    }
+
+    addResource = (text: string, texture: BABYLON.Texture): Resource => {
+        const material = this.createDefaultMaterial(texture);
+        const resource = new Resource(text, material);
+
+        this.registerCollectable(resource);
+        return resource;
     }
 
     addTorch = (x: number, y: number, z: number): void => {

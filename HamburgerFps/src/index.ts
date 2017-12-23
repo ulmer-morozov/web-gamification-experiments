@@ -57,18 +57,25 @@ class Application {
     // setInterval(() => {
     //   this.showMessage("ghost " + i);
     //   i++;
-    // }, 3000);
+    // }, 500);
+  }
+
+  animationendHandler = () => {
+    JawQuery.removeClass(this.messageElement.id, "active");
   }
 
   showMessage = (text: string): void => {
-    const animationendHandler = () => {
-      JawQuery.removeClass(this.messageElement.id, "active");
-      this.messageElement.removeEventListener("animationend", animationendHandler, false);
-    }
-
+    const options: AddEventListenerOptions = {
+      once: true
+    };
     this.messageElement.innerText = text;
-    this.messageElement.addEventListener("animationend", animationendHandler, false);
-    JawQuery.addClass(this.messageElement.id, "active");
+    this.messageElement.removeEventListener("animationend", this.animationendHandler, options);
+    JawQuery.removeClass(this.messageElement.id, "active");
+
+    setTimeout(() => {
+      this.messageElement.addEventListener("animationend", this.animationendHandler, options);
+      JawQuery.addClass(this.messageElement.id, "active");
+    });
   }
 
   initEngine = (): void => {
