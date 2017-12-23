@@ -104,17 +104,6 @@ export class Cross extends Collectable {
             this.rotation.y += 0.04;
             return;
         }
-
-        // this.scaling = this.scaling.scale(0.8);
-
-        // const direction = new BABYLON.Vector3(this.collisionVector.x, 0.3, this.collisionVector.z);
-        // this.position.addInPlace(direction.scale(0.3));
-
-        // const minSize = 0.05;
-        // if (this.scaling.x < minSize) {
-        //     this.animationFinished = true;
-        //     this.onAnimationFinished();
-        // }
     }
 
     onAnimationFinished = (): void => {

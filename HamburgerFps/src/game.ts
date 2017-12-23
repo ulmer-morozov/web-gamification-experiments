@@ -64,7 +64,6 @@ export class Game {
         this.playerCamera.speed = this.defaultCameraSpeed;
         this.playerCamera.inertia = 0.5;
         this.playerCamera.angularSensibility = 500;
-
     }
 
     initRooms = (): void => {
@@ -101,8 +100,7 @@ export class Game {
     }
 
     restart = () => {
-        const spawnPoint = new BABYLON.Vector3(10.16858070697229, 1.604999999880791, 53.666230590517614);
-        // const spawnPoint = new BABYLON.Vector3(0, 1.6, 0);
+        const spawnPoint = new BABYLON.Vector3(0, 1.6, 0);
         this.playerCamera.position.copyFrom(spawnPoint);
         this.playerCamera.rotation.set(0, 0, 0);
         this.playerCamera.speed = this.defaultCameraSpeed;

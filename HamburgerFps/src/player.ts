@@ -30,7 +30,7 @@ export class Player {
         this.canvas.dispatchEvent(newScoreEvent);
 
         if (this.score === 9999) {
-            setInterval(() => this.pullMessage("You win!"), 1000)
+            setTimeout(() => this.pullMessage("You win!"), 1000);
         }
     }
 
