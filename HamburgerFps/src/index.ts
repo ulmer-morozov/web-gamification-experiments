@@ -21,11 +21,17 @@ class Application {
   private needRestartGame: boolean;
 
   constructor() {
-    this.initEngine();
-    this.initUI();
-    this.initGame();
-    this.bindEvents();
-    this.run();
+
+    if (JawQuery.isMobileOrTablet()) {
+      // debugger;
+      document.body.innerHTML = "<h1 style='margin: 5pt; font-size: 45pt;'>Пока сайт доступен только на настольном компьютере с клавиатурой =(<br/> <br/> Но он стоит того, чтобы попробовать открыть его там. Отвечаю!</h1>";
+    } else {
+      this.initEngine();
+      this.initUI();
+      this.initGame();
+      this.bindEvents();
+      this.run();
+    }
   }
 
   time = 0;
