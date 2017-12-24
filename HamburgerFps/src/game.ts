@@ -63,7 +63,7 @@ export class Game {
 
         this.playerCamera.speed = this.defaultCameraSpeed;
         this.playerCamera.inertia = 0.5;
-        this.playerCamera.angularSensibility = 1200;
+        this.playerCamera.angularSensibility = 2000;
     }
 
     initRooms = (): void => {
@@ -176,8 +176,6 @@ export class Game {
                         this.achievements["explorer"] = true;
                     }
                 }
-
-
                 break;
             }
         }
