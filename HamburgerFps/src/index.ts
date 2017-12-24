@@ -7,6 +7,7 @@ import { IRoomChangeEvent } from './iRoomChangeEvent';
 
 //decalrations
 declare function require(name: string);
+require('file-loader?name=index.html!../index.html');
 
 class Application {
   private canvas: HTMLCanvasElement;
@@ -21,17 +22,21 @@ class Application {
   private needRestartGame: boolean;
 
   constructor() {
-
     if (JawQuery.isMobileOrTablet()) {
-      // debugger;
-      document.body.innerHTML = "<h1 style='margin: 5pt; font-size: 45pt;'>Пока сайт доступен только на настольном компьютере с клавиатурой =(<br/> <br/> Но он стоит того, чтобы попробовать открыть его там. Отвечаю!</h1>";
-    } else {
-      this.initEngine();
-      this.initUI();
-      this.initGame();
-      this.bindEvents();
-      this.run();
+      document.body.innerHTML = `
+      <h1 style='margin: 5pt; font-size: 45pt;'>
+        Пока сайт доступен только на настольном компьютере с клавиатурой =(
+        <br/><br/>
+        Но он стоит того, чтобы попробовать открыть его там. Отвечаю!
+      </h1>`;
+      return;
     }
+
+    this.initEngine();
+    this.initUI();
+    this.initGame();
+    this.bindEvents();
+    this.run();
   }
 
   time = 0;

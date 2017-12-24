@@ -164,10 +164,8 @@ export class Ghost extends Collectable {
     }
 
     onAnimationFinished = (): void => {
-        // this.dispose();
         this.setEnabled(false);
         this.isVisible = false;
-        debugger
     }
 
     protected resetInternal = (): void => {
