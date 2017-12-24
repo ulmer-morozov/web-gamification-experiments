@@ -17,6 +17,7 @@ class Application {
   private gameOverElement: HTMLElement;
   private scoreElement: HTMLElement;
   private messageElement: HTMLElement;
+  private helpElement: HTMLElement;
   private needRestartGame: boolean;
 
   constructor() {
@@ -85,13 +86,14 @@ class Application {
     this.scene = new BABYLON.Scene(this.engine);
     this.scene.gravity.y = -0.2;
     this.scene.enablePhysics();
-    this.canvas.focus();
+    // this.canvas.focus();
   }
 
   initUI = (): void => {
     this.scoreElement = document.getElementById("score");
     this.gameOverElement = document.getElementById("gameover");
     this.messageElement = document.getElementById("message");
+    this.helpElement = document.getElementById("help");
 
     const fpsLabel = document.getElementById("fpsLabel");
     fpsLabel.innerHTML = this.engine.getFps().toFixed() + " fps";
@@ -107,7 +109,12 @@ class Application {
     this.canvas.addEventListener(Player.SCORE_CHANGE, this.onScoreChange);
     this.canvas.addEventListener(Game.ROOM_CHANGE, this.onRoomChange);
 
+    this.initPointerLock();
     setInterval(this.game.updatePositionInRoom, 50);
+
+    window.addEventListener('resize', () => {
+      this.engine.resize();
+    });
   }
 
   onRoomChange = (event: IRoomChangeEvent): void => {
@@ -162,6 +169,45 @@ class Application {
 
   setScore = (newScore: number): void => {
     this.scoreElement.innerText = `${newScore}`;
+  }
+
+  initPointerLock = (): void => {
+    const canvas = this.canvas;
+
+    const requestPointerLockHandler = (event: Event): void => {
+      canvas.requestPointerLock = canvas.requestPointerLock || canvas.msRequestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
+      if (canvas.requestPointerLock) {
+        canvas.requestPointerLock();
+      }
+      this.canvas.focus();
+    }
+    canvas.addEventListener("click", requestPointerLockHandler, false);
+
+    this.helpElement.addEventListener("click", (event: Event) => {
+      requestPointerLockHandler(event);
+      JawQuery.addClassHideAfterAnim(this.helpElement, "hidden");
+    }, false);
+
+    const pointerlockchange = (event): void => {
+      const controlEnabled = (
+        document.mozPointerLockElement === canvas
+        || document.webkitPointerLockElement === canvas
+        || document.msPointerLockElement === canvas
+        || document.pointerLockElement === canvas);
+
+      if (!controlEnabled) {
+        this.game.playerCamera.detachControl(canvas);
+        this.helpElement.style.display = "inherit";
+        setTimeout(() => this.helpElement.classList.remove("hidden"));
+      } else {
+        this.game.playerCamera.attachControl(canvas);
+      }
+    };
+
+    document.addEventListener("pointerlockchange", pointerlockchange, false);
+    document.addEventListener("mspointerlockchange", pointerlockchange, false);
+    document.addEventListener("mozpointerlockchange", pointerlockchange, false);
+    document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
   }
 }
 

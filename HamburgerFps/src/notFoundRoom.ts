@@ -93,7 +93,7 @@ export class NotFoundRoom extends Room {
         void main(void) {
             vec3 v = position;
             if(v.x < v.z && v.y > 1.0)
-                v.z += sin(1.0 * position.y + 5.0*(time)) * 0.2;
+                v.z += sin(1.0 * position.y + 5.0*(time)) * 0.9;
             if(v.z > 1.0 && v.y > 1.0)
                 v.x += sin(1.0 * position.z + 5.0*(time)) * 0.5;
             

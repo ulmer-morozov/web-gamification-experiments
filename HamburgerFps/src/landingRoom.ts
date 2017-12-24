@@ -113,7 +113,7 @@ export class LandingRoom extends Room {
 
     const grass = this.createFloor(landingWidth, landingLength);
     grass.position.z = landingLength / 2;
-    grass.position.y = -2 * gap;
+    grass.position.y = -5 * gap;
     grass.material = this.createDefaultMaterial(grassTexture);
 
     const ceiling = this.createCeiling(landingWidth, landingLength + highFloorGap);
