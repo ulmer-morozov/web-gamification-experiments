@@ -63,7 +63,7 @@ export class Game {
 
         this.playerCamera.speed = this.defaultCameraSpeed;
         this.playerCamera.inertia = 0.5;
-        this.playerCamera.angularSensibility = 500;
+        this.playerCamera.angularSensibility = 1200;
     }
 
     initRooms = (): void => {

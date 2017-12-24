@@ -171,6 +171,7 @@
     .gameover-text {
       font-size: 25pt;
       line-height: 25pt;
+      margin-top: 10pt;
     }
 
     .gameover-post-text {
@@ -197,6 +198,7 @@
       right: 0;
       bottom: 0;
       text-align: center;
+      /* opacity: 0; */
       font-family: 'Bungee', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       transition: all 0.5s ease-in-out;
       user-select: none;
@@ -259,10 +261,12 @@
         transform: scale3d(0.2, 0.2, 0.2) rotate3d(1, 0, 0, -100deg);
       }
       20% {
+        top: 40%;
         opacity: 1;
         transform: scale3d(1.2, 1.2, 1.2) rotate3d(1, 0, 0, 0deg);
       }
       30% {
+        top: 40%;
         transform: scale3d(1, 1, 1) rotate3d(0, 0, 0, 0);
       }
       70% {
@@ -287,9 +291,6 @@
       perspective: 200px;
       -moz-perspective: 200px;
       -webkit-perspective: 200px;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      transform-style: preserve-3d;
       text-align: center;
       font-size: 60pt;
       color: white;
