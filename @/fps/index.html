@@ -39,7 +39,13 @@
       opacity: 1;
       transition: opacity 0.5s ease-in-out;
       font-family: 'Alegreya', serif;
-      height: 100%;
+      top: 0;
+      bottom: 0;
+      overflow-y: auto;
+    }
+
+    .page a {
+      color: black;
     }
 
     .page.hidden {
@@ -68,6 +74,7 @@
       top: 0;
       right: 400pt;
       bottom: 0;
+      overflow: hidden;
     }
 
     #fpsLabel {
@@ -158,10 +165,69 @@
       color: white;
     }
 
-
     .gameover-bg {
       position: absolute;
       background-color: crimson;
+      opacity: 0.7;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    #help {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      text-align: center;
+      font-family: 'Bungee', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      transition: all 0.5s ease-in-out;
+      user-select: none;
+    }
+
+    #help.hidden {
+      opacity: 0;
+      transform: scale(2);
+      top: -20;
+    }
+
+    .help-info {
+      position: absolute;
+      left: 0;
+      top: 35%;
+      right: 0;
+      bottom: 0;
+      text-align: center;
+    }
+
+    .help-title {
+      font-size: 60pt;
+      color: white;
+      margin-bottom: 30pt;
+    }
+
+    .help-text {
+      display: inline-block;
+      text-align: left;
+      color: white;
+      font-size: 25pt;
+    }
+
+    .control-parameter {
+      width: 230pt;
+      display: inline-block;
+    }
+
+    .control-value {
+      width: 100pt;
+      display: inline-block;
+    }
+
+    .help-bg {
+      position: absolute;
+      background-color: darkred;
       opacity: 0.7;
       left: 0;
       top: 0;
@@ -218,6 +284,15 @@
     #message.active {
       animation: messageAnimation 2s;
     }
+
+    .page.flexible {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .space-filler {
+      flex-grow: 1;
+    }
   </style>
 </head>
 
@@ -226,13 +301,40 @@
 
 
   <div id="game-view">
-    <div id="message">Ghostbuster!</div>
+    <div id="message">Hello!</div>
     <div id="gameover">
       <div class="gameover-bg"></div>
       <div class="gameover-info">
         <div class="gameover-title">Game over</div>
         <div id="gameover-text" class="gameover-text"></div>
         <div class="gameover-post-text pulse">press any key</div>
+      </div>
+    </div>
+    <div id="help">
+      <div class="help-bg"></div>
+      <div class="help-info">
+        <div class="help-title">Click for start</div>
+        <div class="help-text">
+          <span class="control-parameter">Camera view:</span>
+          <span class="control-value">Mouse</span>
+          <br/>
+
+          <span class="control-parameter">Move forward:</span>
+          <span class="control-value">W</span>
+          <br/>
+
+          <span class="control-parameter">Move back:</span>
+          <span class="control-value">S</span>
+          <br/>
+
+          <span class="control-parameter">Move left:</span>
+          <span class="control-value">A</span>
+          <br/>
+
+          <span class="control-parameter">Move right:</span>
+          <span class="control-value">D</span>
+          <br/>
+        </div>
       </div>
     </div>
     <div id="score"></div>
@@ -245,12 +347,26 @@
 
 
   <div class="site-body">
-    <div id="home-room" class="page hidden">
+    <div id="home-room" class="page flexible hidden">
       <h1>Домашняя страница</h1>
       <p>Добро пожаловать на наш сайт!</p>
       <p>Дом — это символ уюта. Здесь хорошо и спокойно. Временами щебечет реклама и стучит онлайн-консультант. Пора расслабиться
         и получать удовольствие.</p>
       <p>Также дом символизирует начало, ведь именно здесь начинается твое незабываемое путешествие по интернет-страницам.</p>
+      <div class="space-filler"></div>
+      <div id="project-info">
+        <hr/>
+        <h2>Что это?</h2>
+        <p>Это сайт эксперимент в котором навигация по сайту осуществляться в 3d мире.</p>
+        <h2>Кто это сделал? И зачем оно нужно?</h2>
+        <p>Меня зовут Митяй, я кодер и мне нравятся необычные решения. Мне стало любопытно, что будет если убрать главное меню
+          с сайта. Как посетитель может по-другому перемещаться по страницам? Чтобы найти ответ и развлечься я и сделал этот
+          сайт.
+        </p>
+        <p>Для связи пишите на
+          <a href="https://www.facebook.com/dmitry.ulmermorozov">facebook</a>.
+        </p>
+      </div>
     </div>
     <div id="landing-room" class="page hidden">
       <h1>Лэндинг</h1>
