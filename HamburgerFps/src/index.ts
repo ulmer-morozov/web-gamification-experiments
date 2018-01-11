@@ -8,6 +8,7 @@ import { IRoomChangeEvent } from './iRoomChangeEvent';
 //decalrations
 declare function require(name: string);
 require('file-loader?name=index.html!../index.html');
+require('file-loader?name=screenshot.jpg!./screenshot.jpg');
 
 class Application {
   private canvas: HTMLCanvasElement;
