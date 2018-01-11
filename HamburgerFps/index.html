@@ -5,10 +5,11 @@
   <meta name="description" content="Веб-эксперимент, в котором навигация по сайту осуществляется в 3D мире. Автор: Ульмер-Морозов Митяй">
   <meta property="og:url" content="https://ulmer-morozov.github.io/web-gamification-experiments/@/fps/" />
   <meta property="og:title" content="Experiment: FPS menu" />
-  <meta property="og:description" content="Веб-эксперимент, в котором навигация по сайту осуществляется в 3D мире. Автор: Ульмер-Морозов Митяй"/>
+  <meta property="og:description" content="Веб-эксперимент, в котором навигация по сайту осуществляется в 3D мире. Автор: Ульмер-Морозов Митяй"
+  />
   <meta property="og:image" content="https://ulmer-morozov.github.io/web-gamification-experiments/@/fps/screenshot.jpg" />
-  <link href="https://fonts.googleapis.com/css?family=Bungee " rel="stylesheet ">
-  <link href="https://fonts.googleapis.com/css?family=Alegreya:400,900&amp;subset=cyrillic" rel="stylesheet ">
+  <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Alegreya:400,900&amp;subset=cyrillic" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -316,64 +317,64 @@
 </head>
 
 <body>
-  <div id="fpsLabel "></div>
+  <div id="fpsLabel"></div>
 
 
-  <div id="game-view ">
-    <div id="message ">Hello!</div>
-    <div id="gameover ">
-      <div class="gameover-bg "></div>
-      <div class="gameover-info ">
-        <div class="gameover-title ">Game over</div>
-        <div id="gameover-text " class="gameover-text "></div>
-        <div class="gameover-post-text pulse ">press any key</div>
+  <div id="game-view">
+    <div id="message">Hello!</div>
+    <div id="gameover">
+      <div class="gameover-bg"></div>
+      <div class="gameover-info">
+        <div class="gameover-title">Game over</div>
+        <div id="gameover-text" class="gameover-text"></div>
+        <div class="gameover-post-text pulse">press any key</div>
       </div>
     </div>
-    <div id="help ">
-      <div class="help-bg "></div>
-      <div class="help-info ">
-        <div class="help-title ">Click for start</div>
-        <div class="help-text ">
-          <span class="control-parameter ">Camera view:</span>
-          <span class="control-value ">Mouse</span>
+    <div id="help">
+      <div class="help-bg"></div>
+      <div class="help-info">
+        <div class="help-title">Click for start</div>
+        <div class="help-text">
+          <span class="control-parameter">Camera view:</span>
+          <span class="control-value">Mouse</span>
           <br/>
 
-          <span class="control-parameter ">Move forward:</span>
-          <span class="control-value ">W</span>
+          <span class="control-parameter">Move forward:</span>
+          <span class="control-value">W</span>
           <br/>
 
-          <span class="control-parameter ">Move back:</span>
-          <span class="control-value ">S</span>
+          <span class="control-parameter">Move back:</span>
+          <span class="control-value">S</span>
           <br/>
 
-          <span class="control-parameter ">Move left:</span>
-          <span class="control-value ">A</span>
+          <span class="control-parameter">Move left:</span>
+          <span class="control-value">A</span>
           <br/>
 
-          <span class="control-parameter ">Move right:</span>
-          <span class="control-value ">D</span>
+          <span class="control-parameter">Move right:</span>
+          <span class="control-value">D</span>
           <br/>
         </div>
       </div>
     </div>
-    <div id="score "></div>
+    <div id="score"></div>
 
-    <canvas id="glCanvas ">
+    <canvas id="glCanvas">
       Your browser doesn't appear to support the
       <code>&lt;canvas&gt;</code> element.
     </canvas>
   </div>
 
 
-  <div class="site-body ">
-    <div id="home-room " class="page flexible hidden ">
+  <div class="site-body">
+    <div id="home-room" class="page flexible hidden">
       <h1>Домашняя страница</h1>
       <p>Добро пожаловать на наш сайт!</p>
       <p>Дом — это символ уюта. Здесь хорошо и спокойно. Временами щебечет реклама и стучит онлайн-консультант. Пора расслабиться
         и получать удовольствие.</p>
       <p>Также дом символизирует начало, ведь именно здесь начинается твое незабываемое путешествие по интернет-страницам.</p>
-      <div class="space-filler "></div>
-      <div id="project-info ">
+      <div class="space-filler"></div>
+      <div id="project-info">
         <hr/>
         <h2>Что это?</h2>
         <p>Это сайт-эксперимент, в котором навигация по сайту осуществляется в 3D мире.</p>
@@ -381,20 +382,20 @@
         <p>Меня зовут Митяй, я кодер и я люблю необычные решения. Мне стало любопытно, что будет, если убрать главное меню с
           сайта. Как еще посетитель может перемещаться по страницам? Чтобы найти ответ и развлечься, я сделал этот сайт.
           Для связи пишите на
-          <a href="https://www.facebook.com/dmitry.ulmermorozov ">facebook</a>.
+          <a href="https://www.facebook.com/dmitry.ulmermorozov">facebook</a>.
         </p>
         <p>P.S. Я слышал, что кто-то набрал 9999 очков.</p>
       </div>
     </div>
-    <div id="landing-room " class="page hidden ">
+    <div id="landing-room" class="page hidden">
       <h1>Лэндинг</h1>
-      <p>Лэндинг, в простонародье "посадочная полоса ",</br> — это очень длинная и скучная страница, только самые отважные и
-        любознательные посетители могут доскроллить лэндинг до конца.</p>
+      <p>Лэндинг, в простонародье"посадочная полоса",</br> — это очень длинная и скучная страница, только самые отважные и любознательные
+        посетители могут доскроллить лэндинг до конца.</p>
       <p>Здесь ты поймешь, почему страницы иногда называют полотном. Если сайт долго грузится, то дело в тяжелом фоновом видео,
         оно называется видеобэкграунд.</p>
       <p>А если видишь большую кнопку, то это кол-ту-экшн. Обязательно нажми на неё, она тут специально для этого.</p>
     </div>
-    <div id="about-room " class="page hidden ">
+    <div id="about-room" class="page hidden">
       <h1>О компании</h1>
       <p>Ходят слухи, что главная задача этой страницы — зародить в голове посетителя понимание того, что каждый сотрудник компании
         профессионал своего дела, а сама компания — один из лидеров рынка.</p>
@@ -402,7 +403,7 @@
       <p>Важно отметить, что на этой странице зачастую указывается информация о семейном положении сотрудников, их плодовитости
         и наличия у них любимых домашних животных.</p>
     </div>
-    <div id="news-room " class="page hidden ">
+    <div id="news-room" class="page hidden">
       <h1>Новости</h1>
       <p>Здесь ты сможешь найти самую свежую и интересную информацию о жизни компании.</p>
       <p>Наиболее часто освещаются следующие темы:</p>
@@ -413,19 +414,19 @@
         <li>Ведутся работы!</li>
       </ul>
     </div>
-    <div id="footer-room " class="page hidden ">
+    <div id="footer-room" class="page hidden">
       <h1>Подвал</h1>
-      <p>Он же "футор " — последняя надежда разработчиков показать посетителю важную информацию, ведь он уже доскролил страницу
+      <p>Он же"футор" — последняя надежда разработчиков показать посетителю важную информацию, ведь он уже доскролил страницу
         до конца и собрался уходить.</p>
     </div>
 
-    <div id="resource-room " class="page hidden ">
+    <div id="resource-room" class="page hidden">
       <h1>Полезные ресурсы</h1>
       <p>Полезные ссылки, полнотекстовые интернет ресурсы, электронные базы данных и многое другое в алфавитном порядке!</p>
       <p>Обязательно добавляй такие страницы в свои закладки!</p>
     </div>
 
-    <div id="404-room " class="page hidden ">
+    <div id="404-room" class="page hidden">
       <h1>Ошибка 404</h1>
       <p>Поздравляем!</p>
       <p>Вы поймали редкого зверя. Раньше здесь была страница, а сейчас её нет, вернее она есть, но она не та, что была раньше.</p>
@@ -433,34 +434,42 @@
   </div>
   </div>
   <!-- Yandex.Metrika counter -->
-  <script type="text/javascript " >
-      (function (d, w, c) {
-          (w[c] = w[c] || []).push(function() {
-              try {
-                  w.yaCounter47276268 = new Ya.Metrika({
-                      id:47276268,
-                      clickmap:true,
-                      trackLinks:true,
-                      accurateTrackBounce:true
-                  });
-              } catch(e) { }
+  <script type="text/javascript">
+    (function (d, w, c) {
+      (w[c] = w[c] || []).push(function () {
+        try {
+          w.yaCounter47276268 = new Ya.Metrika({
+            id: 47276268,
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true
           });
-  
-          var n = d.getElementsByTagName("script ")[0],
-              s = d.createElement("script "),
-              f = function () { n.parentNode.insertBefore(s, n); };
-          s.type = "text/javascript ";
-          s.async = true;
-          s.src = "https://mc.yandex.ru/metrika/watch.js ";
-  
-          if (w.opera == "[object Opera] ") {
-              d.addEventListener("DOMContentLoaded ", f, false);
-          } else { f(); }
-      })(document, window, "yandex_metrika_callbacks ");
+        } catch (e) {}
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () {
+          n.parentNode.insertBefore(s, n);
+        };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+      } else {
+        f();
+      }
+    })(document, window, "yandex_metrika_callbacks");
   </script>
-  <noscript><div><img src="https://mc.yandex.ru/watch/47276268 " style="position:absolute; left:-9999px; " alt=" " /></div></noscript>
+  <noscript>
+    <div>
+      <img src="https://mc.yandex.ru/watch/47276268" style="position:absolute; left:-9999px;" alt="" />
+    </div>
+  </noscript>
   <!-- /Yandex.Metrika counter -->
-  <script src="bundle.js "></script>
+  <script src="bundle.js"></script>
 </body>
 
 </html>
