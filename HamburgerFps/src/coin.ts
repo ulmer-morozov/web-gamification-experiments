@@ -53,6 +53,8 @@ export class Coin extends Collectable {
 
     onCollect = (player: Player): void => {
         player.addScore(100);
+        const collectCoinSound = new Audio(require('./sounds/collect_coin.mp3'));
+        collectCoinSound.play();
     }
 
     updateAnimation = () => {

@@ -94,6 +94,9 @@ export class Cross extends Collectable {
 
         this.parent = player.collider;
         player.pullMessage("Blessed!");
+
+        const collectCoinSound = new Audio(require('./sounds/pickup.mp3'));
+        collectCoinSound.play();
     }
 
     updateAnimation = () => {

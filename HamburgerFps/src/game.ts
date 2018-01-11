@@ -24,7 +24,6 @@ export class Game {
 
     static ROOM_CHANGE = "ROOM_CHANGE";
 
-
     constructor(private canvas: HTMLCanvasElement, private scene: BABYLON.Scene) {
         this.initPlayerCamera();
         this.initPlayer();

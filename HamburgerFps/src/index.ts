@@ -21,6 +21,8 @@ class Application {
   private helpElement: HTMLElement;
   private needRestartGame: boolean;
 
+  deathSound = new Audio(require('./sounds/lose.mp3'));
+
   constructor() {
     if (JawQuery.isMobileOrTablet()) {
       document.body.innerHTML = `
@@ -153,6 +155,7 @@ class Application {
     };
 
     setTimeout(registerSomeKeyDownRestart, keyListenerDelay);
+    this.deathSound.play();
   }
 
   onScoreChange = (event: CustomEvent): void => {
@@ -164,7 +167,6 @@ class Application {
     if (event.detail.score === 6150 || event.detail.score === 6238) {
       setTimeout(() => this.showMessage("find secret room"), 1000);
     }
-
   }
 
   /* HELPERS */

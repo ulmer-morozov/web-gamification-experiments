@@ -106,6 +106,9 @@ export class Ghost extends Collectable {
 
             player.inventory.cross = undefined;
             player.pullMessage("Ghostbuster!");
+
+            const collectCoinSound = new Audio(require('./sounds/achievement.mp3'));
+            collectCoinSound.play();
             return
         }
 

@@ -1,5 +1,7 @@
 import { Inventory } from "./inventory";
 
+declare function require(name: string);
+
 export class Player {
     public score: number;
     public collider: BABYLON.Mesh;
@@ -31,6 +33,8 @@ export class Player {
 
         if (this.score === 9999) {
             setTimeout(() => this.pullMessage("You win!"), 1000);
+            const collectCoinSound = new Audio(require('./sounds/win.mp3'));
+            collectCoinSound.play();
         }
     }
 

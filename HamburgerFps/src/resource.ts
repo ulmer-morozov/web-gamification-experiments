@@ -30,6 +30,9 @@ export class Resource extends Collectable {
     onCollect = (player: Player): void => {
         player.addScore(22);
         player.pullMessage(`${this.text}!`);
+
+        const collectCoinSound = new Audio(require('./sounds/pickup.mp3'));
+        collectCoinSound.play();
     }
 
     updateAnimation = () => {
