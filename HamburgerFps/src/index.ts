@@ -192,12 +192,20 @@ class Application {
       }
       this.canvas.focus();
     }
-    canvas.addEventListener("click", requestPointerLockHandler, false);
 
-    this.helpElement.addEventListener("click", (event: Event) => {
-      requestPointerLockHandler(event);
+    const pointerLockIsNotAllowed = JawQuery.isWindows10() && JawQuery.isChrome();
+
+    if (!pointerLockIsNotAllowed)
+      canvas.addEventListener("click", requestPointerLockHandler, false);
+
+    const helpElementClickHandler = (event: Event) => {
+      if (!pointerLockIsNotAllowed)
+        requestPointerLockHandler(event);
+
       JawQuery.addClassHideAfterAnim(this.helpElement, "hidden");
-    }, false);
+    }
+
+    this.helpElement.addEventListener("click", helpElementClickHandler, false);
 
     const pointerlockchange = (event): void => {
       const controlEnabled = (
