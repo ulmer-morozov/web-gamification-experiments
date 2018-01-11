@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs';
+import { Howl } from "howler";
 
 import { Collectable } from "./collectable";
 import { Player } from "./player";
@@ -10,6 +11,10 @@ const _BABYLON = require('babylonjs/dist/preview release/proceduralTexturesLibra
 export class Cross extends Collectable {
     private initialParent: BABYLON.Node;
     private initialPosition: BABYLON.Vector3;
+
+    collectSound = new Howl({
+        src: [require('./sounds/pickup.mp3')]
+    });
 
     constructor(private readonly scene: BABYLON.Scene) {
         super();
@@ -95,8 +100,7 @@ export class Cross extends Collectable {
         this.parent = player.collider;
         player.pullMessage("Blessed!");
 
-        const collectCoinSound = new Audio(require('./sounds/pickup.mp3'));
-        collectCoinSound.play();
+       this.collectSound.play();
     }
 
     updateAnimation = () => {

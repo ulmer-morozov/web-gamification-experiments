@@ -1,3 +1,4 @@
+import { Howl } from "howler";
 import { Inventory } from "./inventory";
 
 declare function require(name: string);
@@ -12,6 +13,14 @@ export class Player {
     static SCORE_CHANGE = "SCORE_CHANGE";
     static ON_KILL = "ON_KILL";
     static ON_MESSAGE = "ON_MESSAGE";
+
+    deathSound = new Howl({
+        src: [require('./sounds/lose.mp3')]
+    });
+
+    winSound = new Howl({
+        src: [require('./sounds/win.mp3')]
+    });
 
     constructor(private canvas: HTMLCanvasElement) {
         this.reset();
@@ -33,8 +42,7 @@ export class Player {
 
         if (this.score === 9999) {
             setTimeout(() => this.pullMessage("You win!"), 1000);
-            const collectCoinSound = new Audio(require('./sounds/win.mp3'));
-            collectCoinSound.play();
+            this.winSound.play();
         }
     }
 
@@ -49,6 +57,7 @@ export class Player {
         }
         const newKillEvent = new CustomEvent(Player.ON_KILL, { detail: eventData });
         this.canvas.dispatchEvent(newKillEvent);
+        this.deathSound.play();
     }
 
     reset = (): void => {

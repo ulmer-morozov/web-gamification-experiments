@@ -1,3 +1,5 @@
+import { Howl } from "howler";
+
 import { Collectable } from "./collectable";
 import { Player } from "./player";
 
@@ -15,6 +17,10 @@ export class Ghost extends Collectable {
     private currentStep: number;
     private stepCount: number;
     private evicted: boolean;
+
+    collectSound = new Howl({
+        src: [require('./sounds/achievement.mp3')]
+    });
 
     constructor(
         private readonly size: number = 1.5,
@@ -107,8 +113,7 @@ export class Ghost extends Collectable {
             player.inventory.cross = undefined;
             player.pullMessage("Ghostbuster!");
 
-            const collectCoinSound = new Audio(require('./sounds/achievement.mp3'));
-            collectCoinSound.play();
+            this.collectSound.play();
             return
         }
 

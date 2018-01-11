@@ -1,3 +1,5 @@
+import { Howl } from "howler";
+
 import { Collectable } from "./collectable";
 import { Player } from "./player";
 
@@ -5,6 +7,10 @@ import { Player } from "./player";
 declare function require(name: string);
 
 export class Coin extends Collectable {
+    collectSound = new Howl({
+        src: [require('./sounds/collect_coin.mp3')]
+    });
+
     constructor(private readonly size: number = 1) {
         super();
         this.init();
@@ -53,8 +59,7 @@ export class Coin extends Collectable {
 
     onCollect = (player: Player): void => {
         player.addScore(100);
-        const collectCoinSound = new Audio(require('./sounds/collect_coin.mp3'));
-        collectCoinSound.play();
+        this.collectSound.play();
     }
 
     updateAnimation = () => {

@@ -21,8 +21,6 @@ class Application {
   private helpElement: HTMLElement;
   private needRestartGame: boolean;
 
-  deathSound = new Audio(require('./sounds/lose.mp3'));
-
   constructor() {
     if (JawQuery.isMobileOrTablet()) {
       document.body.innerHTML = `
@@ -155,7 +153,6 @@ class Application {
     };
 
     setTimeout(registerSomeKeyDownRestart, keyListenerDelay);
-    this.deathSound.play();
   }
 
   onScoreChange = (event: CustomEvent): void => {
