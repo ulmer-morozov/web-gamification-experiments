@@ -157,6 +157,14 @@ class Application {
 
   onScoreChange = (event: CustomEvent): void => {
     this.setScore(event.detail.score);
+
+    if (event.detail.score === 3400)
+      this.showMessage("try kill ghost");
+
+    if (event.detail.score === 6150 || event.detail.score === 6238) {
+      setTimeout(() => this.showMessage("find secret room"), 1000);
+    }
+
   }
 
   /* HELPERS */
