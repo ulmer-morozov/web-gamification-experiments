@@ -6,6 +6,7 @@ require('three/examples/js/loaders/OBJLoader.js');
 
 import './style.scss';
 import { Baloon } from './baloon';
+import { IBaloonParameters } from './contracts/iBaloonParameters';
 const fontData = require('three/examples/fonts/droid/droid_sans_bold.typeface.json');
 // './Khula ExtraBold_Regular.json'
 // './Bevan_Regular.json'
@@ -18,7 +19,7 @@ class Main {
     private envMap: THREE.Texture;
     private textMesh: THREE.Mesh;
 
-    private baloon: Baloon;
+    private baloons: Baloon[];
 
     private canvasElement: HTMLCanvasElement;
 
@@ -107,18 +108,54 @@ class Main {
     }
 
     private addBaloons = (): void => {
-        this.baloon = new Baloon({
-            color: 0xff0000,
-            envMap: this.envMap
+        this.baloons = [];
+
+        const add = (params: IBaloonParameters): void => {
+            if (params.color === undefined)
+                params.color = 0xff0000;
+
+            params.envMap = this.envMap;
+
+            const baloon = new Baloon(params);
+
+            this.baloons.push(baloon);
+            this.scene.add(baloon.mesh);
+        };
+
+        add({
+            posX: -30,
+            posY: -70,
+            posZ: 20,
+            speedY: 1.3
         });
 
-        this.scene.add(this.baloon.mesh);
+        add({
+            posX: -20,
+            posY: -90,
+            posZ: -50,
+            speedY: 1.2
+        });
+
+        add({
+            posX: 10,
+            posY: -110,
+            posZ: -20,
+            speedY: 0.9
+        });
+
+        add({
+            posX: 50,
+            posY: -150,
+            posZ: -100,
+            speedY: 0.9
+        });
+
         this.resetBaloons();
     }
 
     public resetBaloons = (): void => {
-        this.baloon.mesh.position.z = -20;
-        this.baloon.mesh.position.y = -53;
+        for (let i = 0; i < this.baloons.length; i++)
+            this.baloons[i].reset();
     }
 
     private getEnvMap = (): THREE.Texture => {
@@ -160,8 +197,8 @@ class Main {
     }
 
     private render = (): void => {
-        // mesh.rotation.y += 0.01;
-        this.baloon.mesh.position.y += 0.9;
+        for (let i = 0; i < this.baloons.length; i++)
+            this.baloons[i].step();
 
         this.renderer.render(this.scene, this.camera);
         requestAnimationFrame(this.render);

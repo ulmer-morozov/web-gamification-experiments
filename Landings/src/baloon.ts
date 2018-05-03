@@ -3,6 +3,9 @@ const _THREE: any = (window as any).THREE = THREE;
 
 require('three/examples/js/loaders/OBJLoader.js');
 
+import { IBaloonParameters } from './contracts/iBaloonParameters';
+import { Vector3 } from 'three';
+
 const baloonObj = require('./baloon.obj');
 const objLoader = new THREE.OBJLoader();
 
@@ -12,18 +15,26 @@ baloonEtalonMesh.rotateX(Math.PI / 2);
 
 
 export class Baloon {
-    public mesh: THREE.Mesh;
+    public readonly mesh: THREE.Mesh;
 
-    constructor(parameters: { color: number, envMap?: THREE.Texture }) {
+    private readonly initialPos: THREE.Vector3;
+    private readonly speed: THREE.Vector3;
+
+    constructor(params: IBaloonParameters) {
+
+        this.initialPos = new Vector3(params.posX, params.posY, params.posZ);
+        this.speed = new Vector3(params.speedX, params.speedY, params.speedZ);
+
         this.mesh = baloonEtalonMesh.clone();
+        this.mesh.position.copy(this.initialPos);
 
         const material = new THREE.MeshStandardMaterial(
             {
-                envMap: parameters.envMap,
+                envMap: params.envMap,
                 // combine: THREE.MixOperation,
                 // reflectivity: 0.25,
                 // specular: 0x0000ff,
-                color: parameters.color,
+                color: params.color,
                 envMapIntensity: 1.2,
                 // metalnessMap: metalllMap,
                 metalness: 1,
@@ -32,5 +43,13 @@ export class Baloon {
         );
 
         this.mesh.material = material;
+    }
+
+    step = (): void => {
+        this.mesh.position.add(this.speed);
+    }
+
+    reset = (): void => {
+        this.mesh.position.copy(this.initialPos);
     }
 }
