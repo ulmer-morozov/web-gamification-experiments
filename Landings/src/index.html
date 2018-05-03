@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <title>webpack-typescript-starter</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,900" rel="stylesheet">
+</head>
+
+<body>
+    <canvas id="hero"></canvas>
+    <a onclick="app.resetBaloons()" class="btn btn-action">Buy</a>
+    <!-- <div class="hero-container">
+    </div> -->
+
+    <script>
+        (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                document.body.appendChild(stats.dom);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = '//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #FFE74C;
+    background-image: url(~/images/pattern.png);
+    background-position: center center;
+}
+
+canvas#hero {
+    position: absolute;
+}
+
+.hero-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    pointer-events: none; // display: flex;
+    // align-items: center;
+    // justify-content: center;
+}
+
+.btn {
+    display: inline-block;
+    user-select: none;
+    &.btn-action {
+        width: 80pt;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 16pt;
+        text-align: center; // font-weight: 900;
+        padding: 10pt 10pt 10pt 10pt;
+        margin-top: 80pt;
+        margin-left: -40pt;
+        color: white;
+        background-color: #EF767A;
+        border-radius: 10pt;
+        &:hover {
+            background-color: #F18E92;
+        }
+    }
+}
