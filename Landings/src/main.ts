@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import * as anime from 'animejs';
+
 const _THREE: any = (window as any).THREE = THREE;
 
 require('three/examples/js/controls/OrbitControls');
@@ -153,7 +155,25 @@ class Main {
         this.resetBaloons();
     }
 
-    public resetBaloons = (): void => {
+    public btnOnClick = (): void => {
+        this.resetBaloons();
+
+
+        // this.textMesh.rotation.y = 0;
+
+        this.textMesh.scale.set(1, 1, 1);
+
+        const animation = anime({
+            targets: this.textMesh.scale,
+            x: this.textMesh.scale.x * 2,
+            y: this.textMesh.scale.y * 2,
+            z: this.textMesh.scale.z * 2,
+            // duration: 400,
+            easing: 'easeInOutElastic'
+        });
+    }
+
+    private resetBaloons = (): void => {
         for (let i = 0; i < this.baloons.length; i++)
             this.baloons[i].reset();
     }
